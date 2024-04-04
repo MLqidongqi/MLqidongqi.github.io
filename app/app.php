@@ -9,10 +9,15 @@ app.use(express.json());
 const nicknames = [];
 const messages = [];
 
+// 设置一个全局变量来存储您的昵称
+const yourUsername = 'ML';
+
 // 发送消息
 app.post('/setNickname', (req, res) => {
     const { nickname } = req.body;
-    if (!nickname.startsWith('ML')) {
+    if (nickname.startsWith('ML') && nickname !== yourUsername) {
+        res.status(400).send({ message: '昵称已被占用，请使用其他昵称' });
+    } else if (nickname.startsWith('ML')) {
         nicknames.push(nickname);
         res.status(200).send({ message: '昵称设置成功' });
     } else {
@@ -35,6 +40,10 @@ app.post('/sendMessage', (req, res) => {
 app.get('/getMessages', (req, res) => {
     res.status(200).send({ messages });
 });
+
+app.listen(port, () => {
+    console.log(`服务器运行在 http://localhost:${port}`);
+});});
 
 app.listen(port, () => {
     console.log(`服务器运行在 http://localhost:${port}`);
