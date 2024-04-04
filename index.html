@@ -3,35 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>视频上传网站</title>
+    <title>聊天网站</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        .chat-area {
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
 </head>
 <body>
-    <h1>视频上传</h1>
-    <form id="videoUploadForm">
-        <input type="file" id="videoFile" accept="video/*">
-        <button type="submit">上传视频</button>
-    </form>
-
-    <h2>视频列表</h2>
-    <div id="videoList">
-        <!-- 视频列表将在这里动态生成 -->
+    <div class="container">
+        <div class="header">
+            <h1>聊天网站</h1>
+        </div>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="请输入您的名称" required>
+            <button onclick="setUsername()">确定</button>
+        </div>
+        <div class="chat-area" id="chatArea"></div>
+        <div class="input-group">
+            <input type="text" id="message" placeholder="请输入消息">
+            <button onclick="sendMessage()">发送</button>
+        </div>
     </div>
 
-    <h2>视频播放器</h2>
-    <video id="videoPlayer" controls width="640" height="360">
-        您的浏览器不支持视频标签。
-    </video>
-
     <script>
-        document.getElementById('videoUploadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const videoFile = document.getElementById('videoFile').files[0];
-            if (videoFile) {
-                // 这里应该是上传视频文件的逻辑
-                console.log('上传视频文件:', videoFile);
-                // 上传成功后，可以将视频信息添加到视频列表中
+        function setUsername() {
+            const username = document.getElementById('username').value;
+            if (!username.startsWith('ML')) {
+                localStorage.setItem('username', username);
+                document.getElementById('username').value = '';
+                document.getElementById('message').focus();
+            } else {
+                alert('名称不能包含ML启动器');
             }
-        });
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            const username = localStorage.getItem('username');
+            if (username) {
+                // 这里应该是发送消息的逻辑
+                console.log('发送消息:', username, message);
+                document.getElementById('message').value = '';
+            }
+        }
     </script>
 </body>
 </html>
