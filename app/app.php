@@ -25,16 +25,7 @@ app.post('/sendMessage', (req, res) => {
     const { nickname, message } = req.body;
     if (nickname && message) {
         messages.push({ nickname, message });
-        res.status(200).send({ message: '消息发送});
-
-// 获取聊天记录
-app.get('/getMessages', (req, res) => {
-    res.status(200).send({ messages });
-});
-
-app.listen(port, () => {
-    console.log(`服务器运行在 http://localhost:${port}`);
-});});
+        res.status(200).send({ message: '消息发送});});
 
 app.listen(port, () => {
     console.log(`服务器运行在 http://localhost:${port}`);
