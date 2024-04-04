@@ -5,64 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>聊天网站</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .header {
-            text-align: center;
-        }
-        .input-group {
-            margin-bottom: 15px;
-        }
-        .input-group input {
-            padding: 10px;
-            font-size: 16px;
-        }
-        .chat-area {
-            height: 300px;
-            overflow-y: scroll;
-        }
+        /* 在此处添加您的CSS样式 */
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>聊天网站</h1>
-        </div>
-        <div class="input-group">
-            <input type="text" id="username" placeholder="请输入您的名称" required>
-            <button onclick="setUsername()">确定</button>
-        </div>
-        <div class="chat-area" id="chatArea"></div>
-        <div class="input-group">
-            <input type="text" id="message" placeholder="请输入消息">
-            <button onclick="sendMessage()">发送</button>
-        </div>
+    <div id="chat-container">
+        <h1>欢迎，请输入您的昵称</h1>
+        <input type="text" id="nickname" placeholder="昵称" required>
+        <button onclick="setNickname()">确定</button>
+    </div>
+
+    <div id="chat-area">
+        <!-- 聊天内容将在这里动态生成 -->
+    </div>
+
+    <div id="chat-input">
+        <input type="text" id="message" placeholder="输入消息">
+        <button onclick="sendMessage()">发送</button>
     </div>
 
     <script>
-        function setUsername() {
-            const username = document.getElementById('username').value;
-            if (!username.startsWith('ML')) {
-                localStorage.setItem('username', username);
-                document.getElementById('username').value = '';
+        function setNickname() {
+            const nickname = document.getElementById('nickname').value;
+            if (!nickname.startsWith('ML')) {
+                localStorage.setItem('nickname', nickname);
+                document.getElementById('nickname').value = '';
                 document.getElementById('message').focus();
             } else {
-                alert('名称不能包含ML启动器');
+                alert('昵称不能包含ML启动器');
             }
         }
 
         function sendMessage() {
             const message = document.getElementById('message').value;
-            const username = localStorage.getItem('username');
-            if (username) {
+            const nickname = localStorage.getItem('nickname');
+            if (nickname) {
                 // 这里应该是发送消息的逻辑
-                console.log('发送消息:', username, message);
+                console.log('发送消息:', nickname, message);
                 document.getElementById('message').value = '';
             }
         }
