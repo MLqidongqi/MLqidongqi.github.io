@@ -1,31 +1,41 @@
 const express = require('express');
-const multer = require('multer');
 const app = express();
+const port = 3000;
 
-// 配置视频存储
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
-const upload = multer({ storage: storage });
+// 设置中间件以解析JSON
+app.use(express.json());
 
-// 视频上传路由
-app.post('/upload', upload.single('videoFile'), (req, res) => {
-    if (req.file) {
-        // 视频文件上传成功
-        // 存储视频文件并返回上传信息
-        res.send({ message: '视频上传成功', file: req.file });
+// 存储昵称和消息
+const nicknames = [];
+const messages = [];
+
+// 发送消息
+app.post('/setNickname', (req, res) => {
+    const { nickname } = req.body;
+    if (!nickname.startsWith('ML')) {
+        nicknames.push(nickname);
+        res.status(200).send({ message: '昵称设置成功' });
     } else {
-        res.status(400).send({ message: '没有上传文件' });
+        res.status(400).send({ message: '昵称不能包含ML启动器' });
     }
 });
 
-// 启动服务器
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`服务器运行在 http://localhost:${PORT}`);
+// 发送消息
+app.post('/sendMessage', (req, res) => {
+    const { nickname, message } = req.body;
+    if (nickname && message) {
+        messages.push({ nickname, message });
+        res.status(200).send({ message: '消息发送成功' });
+    } else {
+        res.status(400).send({ message: '请提供昵称和消息' });
+    }
+});
+
+// 获取聊天记录
+app.get('/getMessages', (req, res) => {
+    res.status(200).send({ messages });
+});
+
+app.listen(port, () => {
+    console.log(`服务器运行在 http://localhost:${port}`);
 });
