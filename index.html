@@ -1,104 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>聊天室</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        .chat-container {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-            overflow-y: auto;
-        }
-        .message {
-            margin-bottom: 10px;
-        }
-        .message p {
-            margin: 0;
-            padding: 5px;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            display: inline-block;
-        }
-        .message .username {
-            font-weight: bold;
-            color: blue;
-        }
-        .input-container {
-            display: flex;
-            align-items: center;
-        }
-        .input-container input[type="text"] {
-            flex: 1;
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .input-container button {
-            padding: 10px 20px;
-            background-color: blue;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <title>博客</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="chat-container" id="chatContainer">
-    </div>
-    <div class="input-container">
-        <input type="text" id="messageInput" placeholder="输入消息...">
-        <button onclick="sendMessage()">发送</button>
-    </div>
-
-    <script>
-        let username;
-        
-        // 检查localStorage中是否已有昵称
-        if(localStorage.getItem('username')) {
-            username = localStorage.getItem('username');
-        } else {
-            username = prompt("请输入您的昵称：");
-            if (!username) {
-                alert("请输入昵称后再进行聊天。");
-                location.reload(); // 如果没有输入昵称，重新加载页面
-            } else {
-                localStorage.setItem('username', username); // 存储昵称到localStorage
-            }
-        }
-
-        function sendMessage() {
-            const messageInput = document.getElementById('messageInput');
-            const chatContainer = document.getElementById('chatContainer');
-            const message = messageInput.value.trim();
-
-            if (message) {
-                // 创建消息元素
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message');
-                messageElement.innerHTML = `<p><span class="username">${username}: </span>${message}</p>`;
-                
-                // 将消息添加到聊天容器中
-                chatContainer.appendChild(messageElement);
-                chatContainer.scrollTop = chatContainer.scrollHeight; // 滚动到底部
-<script src="/socket.io/socket.io.js"></script>
-
-                // 清空输入框
-                messageInput.value = '';
-            }
-        }
-    </script>
+    <header>
+        <h1>欢迎来到我的世界 小依然的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h2>探索《我的世界》的奇妙世界</h2>
+            <p>这里是博客的内容区域，您可以在这里添加您的文章和更新。</p>
+            <!-- 更多内容 -->
+        </article>
+    </main>
+    <footer>
+        <p>版权所有 © 2024 小依然</p>
+    </footer>
 </body>
 </html>
