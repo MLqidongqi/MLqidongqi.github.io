@@ -27,7 +27,9 @@
     <script>
         function setNickname() {
             const nickname = document.getElementById('nickname').value;
-            if (!nickname.startsWith('ML')) {
+            if (nickname.startsWith('ML') && nickname !== 'ML' + localStorage.getItem('yourUsername')) {
+                alert('昵称已被占用，请使用其他昵称');
+            } else if (nickname.startsWith('ML')) {
                 localStorage.setItem('nickname', nickname);
                 document.getElementById('nickname').value = '';
                 document.getElementById('message').focus();
