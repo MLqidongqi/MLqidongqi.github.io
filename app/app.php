@@ -9,19 +9,14 @@ app.use(express.json());
 const nicknames = [];
 const messages = [];
 
-// 设置一个全局变量来存储您的昵称
-const yourUsername = 'ML';
-
-// 发送消息
+// 设置昵称
 app.post('/setNickname', (req, res) => {
     const { nickname } = req.body;
-    if (nickname.startsWith('ML') && nickname !== yourUsername) {
-        res.status(400).send({ message: '昵称已被占用，请使用其他昵称' });
-    } else if (nickname.startsWith('ML')) {
+    if (!nicknames.includes(nickname)) {
         nicknames.push(nickname);
         res.status(200).send({ message: '昵称设置成功' });
     } else {
-        res.status(400).send({ message: '昵称不能包含ML启动器' });
+        res.status(400).send({ message: '昵称已存在，请使用其他昵称' });
     }
 });
 
@@ -30,11 +25,7 @@ app.post('/sendMessage', (req, res) => {
     const { nickname, message } = req.body;
     if (nickname && message) {
         messages.push({ nickname, message });
-        res.status(200).send({ message: '消息发送成功' });
-    } else {
-        res.status(400).send({ message: '请提供昵称和消息' });
-    }
-});
+        res.status(200).send({ message: '消息发送});
 
 // 获取聊天记录
 app.get('/getMessages', (req, res) => {
