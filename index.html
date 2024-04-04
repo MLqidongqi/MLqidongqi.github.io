@@ -1,73 +1,105 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>聊天网站</title>
+    <title>简易聊天室</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+            background-color: yellow;
+            font-family: 'Arial', sans-serif;
         }
-        .container {
+        .chat-container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 400px;
+            overflow-y: scroll;
         }
-        .header {
-            text-align: center;
-            padding: 20px 0;
-        }
-        .input-group {
-            margin-bottom: 15px;
-        }
-        .input-group input {
+        .message {
+            margin-bottom: 10px;
             padding: 10px;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            word-break: break-all;
+        }
+        .self {
+            background-color: #e7e7e7;
+            align-self: flex-end;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .input-message {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             font-size: 16px;
         }
-        .chat-area {
-            height: 300px;
-            overflow-y: scroll;
+        .send-button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>聊天网站</h1>
-        </div>
-        <div class="input-group">
-            <input type="text" id="nickname" placeholder="请输入您的昵称" required>
-            <button onclick="setNickname()">确定</button>
-        </div>
-        <div class="chat-area" id="chatArea"></div>
-        <div class="input-group">
-            <input type="text" id="message" placeholder="输入消息">
-            <button onclick="sendMessage()">发送</button>
-        </div>
-    </div>
-
+    <div id="app"></div>
     <script>
-        function setNickname() {
-            const nickname = document.getElementById('nickname').value;
-            if (nickname !== '') {
-                localStorage.setItem('nickname', nickname);
-                document.getElementById('nickname').value = '';
-                document.getElementById('message').focus();
-            }
-        }
+        const App = {
+            data() {
+                return {
+                    messages: [],
+                    username: localStorage.getItem('username') || '',
+                    newMessage: ''
+                };
+            },
+            mounted() {
+                if (!this.username) {
+                    this.username = prompt('请输入您的名称');
+                    localStorage.setItem('username', this.username);
+                }
+                // 这里应该连接WebSocket并监听消息
+            },
+            methods: {
+                sendMessage() {
+                    if (this.newMessage.trim() === '') return;
+                    const message = {
+                        username: this.username,
+                        content: this.newMessage
+                    };
+                    // 这里应该通过WebSocket发送消息
+                    this.messages.push(message);
+                    this.newMessage = '';
+                }
+            },
+            template: `
+                <div class="chat-container">
+                    <div class="message" :class="{ self: message.username === username }" v-for="message in messages">
+                        {{ message.username }}: {{ message.content }}
+                    </div>
+                </div>
+                <div class="input-container">
+                    <input class="input-message" v-model="newMessage" @keyup.enter="sendMessage" placeholder="输入消息...">
+                    <button class="send-button" @click="sendMessage">发送</button>
+                </div>
+            `
+        };
 
-        function sendMessage() {
-            const message = document.getElementById('message').value;
-            const nickname = localStorage.getItem('nickname');
-            if (nickname) {
-                // 这里应该是发送消息的逻辑
-                console.log('发送消息:', nickname, message);
-                document.getElementById('message').value = '';
-            }
-        }
+        Vue.createApp(App).mount('#app');
     </script>
+    <script src="https://unpkg.com/vue@next"></script>
 </body>
 </html>
