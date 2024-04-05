@@ -8,23 +8,26 @@
     margin: 0;
     padding: 0;
     background-color: #333; /* 深灰色背景 */
-    height: 200vh; /* 页面高度为两个视口高度 */
+    height: 200vh; /* 网页长度为200vh */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 垂直居中 */
+    align-items: center; /* 水平居中 */
   }
-  .centered-text {
-    font-size: 25px; /* 您可以根据需要调整字体大小 */
-    color: white;
+  .blog-container {
+    width: 7cm; /* 宽度为7cm */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* 顶部间距 */
+    flex: 1; /* 占据剩余空间 */
+    overflow-y: auto; /* 允许滚动 */
+  }
+  .blog-title {
+    font-size: 24px; /* 您可以根据需要调整字体大小 */
+    color: #333;
     text-align: center;
-    margin-bottom: 1cm; /* 底部间距1cm */
-  }
-  .image-button {
-    width: calc(100% - 0.8cm); /* 宽度为100%减去两侧的0.4cm */
-    height: auto; /* 根据图片比例自动调整高度 */
-    max-height: 50vh; /* 最大高度为视口高度的50% */
-    margin: 0 auto; /* 水平居中 */
-    display: block; /* 防止图片下方有间隙 */
+    margin-bottom: 20px; /* 底部间距 */
   }
   .footer-text {
     margin-top: auto; /* 将版权信息推到最底部 */
@@ -32,13 +35,20 @@
     color: white;
     text-align: center;
   }
+  .top-image {
+    display: block;
+    width: 100%; /* 图片宽度为100% */
+    height: auto;
+    margin-top: 20px; /* 顶部间距 */
+  }
 </style>
 </head>
 <body>
-  <div class="centered-text">小依然的博客</div>
-  <a href="https://mlqidongqi.github.io/boke/1.html" target="_blank" rel="noopener noreferrer">
-    <img src="https://i.imgs.ovh/2024/04/04/ttbSJ.jpeg" alt="博客图片" class="image-button" />
-  </a>
+  <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="tcWI9.jpeg" class="top-image" border="0" />
+  <div class="blog-container">
+    <div class="blog-title">小依然博客</div>
+    <!-- 在这里添加您的博客内容 -->
+  </div>
   <div class="footer-text">版权所有©️ 2024 小依然</div>
 </body>
 </html>
