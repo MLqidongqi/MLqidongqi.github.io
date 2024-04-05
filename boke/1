@@ -1,1 +1,50 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body, html {
+    margin: 0;
+    padding: 20px;
+    background-color: #333; /* 深灰色背景 */
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  .nav-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #fff; /* 白色按钮 */
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+  }
+  .centered-image {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+</head>
+<body>
+  <a href="https://mlqidongqi.github.io" class="nav-button" target="_blank">访问ML启动器</a>
+  <img src="https://i.imgs.ovh/2024/04/04/tciFl.jpeg" alt="tciFl.jpeg" class="centered-image" border="0" />
+  
+  <h1>软件名称：ML启动器</h1>
+  <p>ML启动器是我个人为安卓平台开发的一款实用软件，得名于某网友的创意。该软件专注于为“我的世界”玩家提供便捷的服务，包括游戏启动、资源下载、社交聊天等功能，同时确保不提供任何游戏辅助或外挂，以维护公平的游戏环境。</p>
+  <h2>主要功能特点如下：</h2>
+  <ul>
+    <li><strong>我的世界启动：</strong>一键快速启动“我的世界”游戏，让您立即投入充满想象力的游戏世界。</li>
+    <li><strong>资源下载：</strong>提供“我的世界”游戏的资源下载服务，包括游戏版本更新、地图、皮肤等，这些资源均通过第三方网站和网盘获取，方便玩家自由选择和安装。</li>
+    <li><strong>社交聊天：</strong>内置聊天功能，方便玩家在游戏外沟通交流，分享游戏心得，但请注意，此功能不提供游戏内聊天。</li>
+    <li><strong>界面简洁：</strong>ML启动器界面设计简洁明了，易于操作，让玩家能够轻松管理游戏资源和享受聊天功能。</li>
+  </ul>
+  <p>ML启动器承诺不提供任何游戏辅助或外挂功能，坚持公平游戏原则，致力于为玩家提供一个干净、安全、有趣的游戏环境。想要了解更多信息，请访问ML启动器的官方网站：<a href="https://xiaoyiran.rth10.com" target="_blank">https://xiaoyiran.rth10.com</a>。在官网底部，您还可以找到我的视频号，欢迎关注获取更多精彩内容！</p>
+  <p>立即下载ML启动器，开启您的“我的世界”新旅程！</p>
+</body>
+</html>
