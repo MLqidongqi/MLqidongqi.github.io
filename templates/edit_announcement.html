@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>编辑公告</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .announcement-form {
+            margin-top: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="announcement-form">
+        <h2>编辑公告内容</h2>
+        <form method="post">
+            <textarea name="announcement" rows="4" cols="50">{{ announcement }}</textarea>
+            <br>
+            <input type="submit" value="保存公告">
+        </form>
+    </div>
+</body>
+</html>
