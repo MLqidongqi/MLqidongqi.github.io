@@ -1,53 +1,44 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    background-color: #333; /* 深灰色背景 */
-    height: 200vh; /* 网页长度为200vh */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 水平居中 */
-  }
-  .blog-container {
-    width: 7cm; /* 宽度为7cm */
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* 顶部间距 */
-    flex: 1; /* 占据剩余空间 */
-    overflow-y: auto; /* 允许滚动 */
-  }
-  .blog-title {
-    font-size: 24px; /* 您可以根据需要调整字体大小 */
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px; /* 底部间距 */
-  }
-  .top-image {
-    display: block;
-    width: 7cm; /* 图片宽度为7cm */
-    height: auto;
-  }
-  .footer-text {
-    margin-top: auto; /* 将版权信息推到最底部 */
-    font-size: 12px; /* 您可以根据需要调整字体大小 */
-    color: white;
-    text-align: center;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=7cm, initial-scale=1.0">
+    <title>小依然博客</title>
+    <style>
+        body, html {
+            height: 200vh;
+            margin: 0;
+            padding: 0;
+        }
+        .header-image {
+            width: 100%;
+            display: block;
+        }
+        .title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5em;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px 0;
+        }
+        .footer-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 <body>
-  <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="tcWI9.jpeg" class="top-image" />
-  <div class="blog-container">
-    <div class="blog-title">小依然博客</div>
-    <!-- 在这里添加您的博客内容 -->
-  </div>
-  <div class="footer-text">版权所有©️ 2024 小依然</div>
+    <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
+    <div class="title">小依然博客</div>
+    <div class="footer-text">
+        版权所有©️ 2024 小依然
+    </div>
 </body>
 </html>
