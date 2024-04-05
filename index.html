@@ -1,30 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>个人博客</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .post {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body, html {
+    height: 200%; /* 假设手机屏幕高度为100vh，这里设置为200vh即两个屏幕高度 */
+    margin: 0;
+    padding: 0;
+    background-color: #333; /* 深灰色背景 */
+  }
+  .header-image {
+    width: 100%; /* 头部图片宽度为手机屏幕宽度 */
+    display: block; /* 防止图片下方有间隙 */
+  }
+  .centered-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px; /* 您可以根据需要调整字体大小 */
+    color: white;
+    text-align: center;
+  }
+  .footer-text {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px; /* 您可以根据需要调整字体大小 */
+    color: white;
+  }
+</style>
 </head>
 <body>
-    <h1>我的博客</h1>
-    <form action="/create" method="post">
-        <input type="text" name="title" placeholder="标题" required>
-        <textarea name="content" placeholder="内容" required></textarea>
-        <button type="submit">发布</button>
-    </form>
-    <% posts.forEach(function(post) { %>
-        <div class="post">
-            <h2><%= post.title %></h2>
-            <p><%= post.content %></p>
-        </div>
-    <% }) %>
+  <img src="https://imgloc.com/image/tcWI9" alt="Header Image" class="header-image">
+  <div class="centered-text">小依然的博客</div>
+  <div class="footer-text">版权所有©️</div>
 </body>
 </html>
