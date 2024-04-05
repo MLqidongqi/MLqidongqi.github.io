@@ -32,14 +32,17 @@
         }
         .button-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* 修改为列布局 */
+            align-items: center; /* 居中对齐 */
             margin-top: 0.5cm; /* 半厘米 */
         }
         .clickable-image {
             width: calc(100% - 4mm); /* 宽度为100%减去两边的2mm */
             height: auto;
             cursor: pointer;
-            margin-top: 0.4cm; /* 新增的图片按钮距离上一个按钮0.4cm */
+        }
+        .clickable-image:nth-child(2) {
+            margin-top: 0.4cm; /* 第二个图片按钮的顶部间距 */
         }
     </style>
 </head>
@@ -48,7 +51,7 @@
     <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
     <div class="button-container">
         <img src="https://i.imgs.ovh/2024/04/04/ttbSJ.jpeg" alt="点击跳转1" class="clickable-image" onclick="location.href='https://mlqidongqi.github.io/boke/1.html';">
-        <img src="https://i.imgs.ovh/2024/04/04/t1tkd.jpeg" alt="点击跳转2" class="clickable-image" onclick="location.href='https://mlqidongqi.github.io/2.html';" style="margin-top: 0.4cm;">
+        <img src="https://i.imgs.ovh/2024/04/04/t1tkd.jpeg" alt="点击跳转2" class="clickable-image" onclick="location.href='https://mlqidongqi.github.io/2.html';">
     </div>
     <div class="footer-text">
         版权所有©️ 2024 小依然
