@@ -22,21 +22,24 @@
             padding: 10px 0;
         }
         .footer-text {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            margin-top: auto; /* 将版权信息推到容器的底部 */
             text-align: center;
             padding: 10px 0;
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景，以便版权信息在深色背景下可见 */
+        }
+        .content {
+            min-height: 100vh; /* 使内容区域至少和视口一样高 */
+            display: flex;
+            flex-direction: column;
         }
     </style>
 </head>
 <body>
-    <div class="title">小依然博客</div>
-    <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
-    <div class="footer-text">
-        版权所有©️ 2024 小依然
+    <div class="content">
+        <div class="title">小依然博客</div>
+        <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
+        <div class="footer-text">
+            版权所有©️ 2024 小依然
+        </div>
     </div>
 </body>
 </html>
