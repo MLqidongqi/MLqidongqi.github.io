@@ -8,18 +8,20 @@
     margin: 0;
     padding: 0;
     background-color: #333; /* 深灰色背景 */
+    height: 200vh; /* 页面高度为两个视口高度 */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* 顶部和底部对齐 */
-    height: 100vh; /* 页面高度为视口高度 */
   }
   .header-image {
     width: 100%; /* 头部图片宽度为手机屏幕宽度 */
     display: block; /* 防止图片下方有间隙 */
   }
   .centered-text {
-    width: 7cm; /* 宽度设置为7cm */
-    margin: 0 auto; /* 水平居中 */
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
     font-size: 25px; /* 您可以根据需要调整字体大小 */
     color: white;
     text-align: center;
@@ -33,8 +35,8 @@
 </style>
 </head>
 <body>
-  <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="tcWI9.jpeg" class="header-image" />
   <div class="centered-text">小依然的博客</div>
+  <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="tcWI9.jpeg" class="header-image" />
   <div class="footer-text">版权所有©️</div>
 </body>
 </html>
