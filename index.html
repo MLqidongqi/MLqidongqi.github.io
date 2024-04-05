@@ -9,19 +9,16 @@
             height: 200vh;
             margin: 0;
             padding: 0;
+            background-color: #333; /* 深灰色背景 */
+            color: white; /* 文本颜色设置为白色，以便在深色背景下可见 */
         }
         .header-image {
             width: 100%;
             display: block;
         }
         .title {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
             text-align: center;
             font-size: 1.5em;
-            background-color: rgba(255, 255, 255, 0.5);
             padding: 10px 0;
         }
         .footer-text {
@@ -31,12 +28,13 @@
             width: 100%;
             text-align: center;
             padding: 10px 0;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景，以便版权信息在深色背景下可见 */
         }
     </style>
 </head>
 <body>
-    <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
     <div class="title">小依然博客</div>
+    <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
     <div class="footer-text">
         版权所有©️ 2024 小依然
     </div>
