@@ -11,29 +11,35 @@
     height: 200vh; /* 页面高度为两个视口高度 */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* 顶部对齐 */
-  }
-  .header-image {
-    width: 100%; /* 头部图片宽度为手机屏幕宽度 */
-    display: block; /* 防止图片下方有间隙 */
+    justify-content: center; /* 垂直居中 */
   }
   .centered-text {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
     font-size: 25px; /* 您可以根据需要调整字体大小 */
     color: white;
     text-align: center;
+    margin-bottom: 1cm; /* 底部间距1cm */
   }
   .image-button {
     width: calc(100% - 0.8cm); /* 宽度为100%减去两侧的0.4cm */
-    margin: 1cm auto 0; /* 顶部间距1cm，左右自动居中 */
+    margin: 0 auto; /* 水平居中 */
     display: block; /* 防止图片下方有间隙 */
   }
   .footer-text {
     margin-top: auto; /* 将版权信息推到最底部 */
     font-size: 12px; /* 您可以根据需要调整字体大小 */
+    color: white;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <div class="centered-text">小依然的博客</div>
+  <a href="https://mlqidongqi.github.io/boke/1" target="_blank">
+    <img src="https://i.imgs.ovh/2024/04/04/ttbSJ.jpeg" alt="ttbSJ.jpeg" class="image-button" />
+  </a>
+  <div class="footer-text">版权所有©️</div>
+</body>
+</html>
     color: white;
     text-align: center;
   }
