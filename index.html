@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Minecraft主题博客</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>公告页面</title>
+    <style>
+        body {
+            background-color: #FDF5E6;
+            font-family: Arial, sans-serif;
+        }
+        .announcement {
+            margin-top: 100px;
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <!-- 图片中已经包含文字，所以这里不需要再次写欢迎信息 -->
-    </header>
-    <main>
-        <article>
-            <h2>Minecraft ML启动器</h2>
-            <p>了解更多关于Minecraft ML启动器的信息，请点击下面的链接：</p>
-            <a href="ml_launcher.html">ML启动器</a>
-        </article>
-    </main>
-    <footer>
-        <p>版权所有 © 2024 Minecraft主题博客</p>
-    </footer>
+    <div class="announcement">
+        <p>{{ announcement }}</p>
+    </div>
 </body>
 </html>
