@@ -12,9 +12,18 @@
             background-color: #333; /* 深灰色背景 */
             color: white; /* 文本颜色设置为白色，以便在深色背景下可见 */
         }
+       .header {
+            position: relative; /* 设置相对定位 */
+            height: 100px; /* 设置顶部区域的高度 */
+            background-color: #333;
+            text-align: center;
+            line-height: 100px; /* 使文本垂直居中 */
+        }
        .header-image {
-            width: 100%;
-            display: block;
+            position: absolute; /* 设置绝对定位 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%); /* 进行水平和垂直居中偏移 */
         }
        .title {
             text-align: center;
@@ -56,8 +65,10 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
+    </div>
     <div class="title">小依然博客</div>
-    <img src="https://i.imgs.ovh/2024/04/04/tcWI9.jpeg" alt="小依然博客" class="header-image">
     <img src="https://i.imgs.ovh/2024/04/04/tc623.jpeg" alt="点击跳转 1" class="round-image" onclick="location.href='https://mlqidongqi.github.io/boke/1.html';">
     <div class="button-container">
         <img src="https://i.imgs.ovh/2024/04/04/ttbSJ.jpeg" alt="点击跳转 1" class="clickable-image" onclick="location.href='https://mlqidongqi.github.io/boke/1.html';">
