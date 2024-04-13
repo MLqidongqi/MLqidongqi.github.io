@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>视频播放网站</title>
+<style>
+  body {
+    text-align: center;
+  }
+  #videoContainer {
+    margin-top: 20px;
+  }
+  .controlButton {
+    margin: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>视频播放</h1>
+
+<div id="videoContainer">
+  <video id="videoPlayer" width="720" controls>
+    <source src="https://b23.tv/L1X9Xvo" type="video/mp4">
+    您的浏览器不支持视频标签。
+  </video>
+  <br>
+  <button class="controlButton" onclick="copyLink()">复制视频链接</button>
+  <button class="controlButton" onclick="changeSpeed()">播放速度: <span id="speed">1.0</span>x</button>
+  <button class="controlButton" onclick="downloadVideo()">下载视频</button>
+</div>
+
+<script>
+  function copyLink() {
+    const videoLink = document.getElementById('videoPlayer').src;
+    navigator.clipboard.writeText(videoLink).then(() => {
+      alert('视频链接已复制到剪贴板');
+    }).catch(err => {
+      alert('复制失败');
+    });
+  }
+
+  function changeSpeed() {
+    let currentSpeed = document.getElementById('videoPlayer').playbackRate;
+    currentSpeed = (currentSpeed === 1.0) ? 0.5 : 1.0;
+    document.getElementById('videoPlayer').playbackRate = currentSpeed;
+    document.getElementById('speed').textContent = currentSpeed;
+  }
+
+  function downloadVideo() {
+    const videoLink = document.getElementById('videoPlayer').src;
+    const a = document.createElement('a');
+    a.href = videoLink;
+    a.download = 'video.mp4';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+</script>
+
+</body>
+</html>
