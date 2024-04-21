@@ -10,18 +10,18 @@
     padding: 0;
     overflow: hidden; /* 隐藏滚动条 */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     flex-direction: column;
+    height: 100vh;
+  }
+  .header {
+    text-align: center;
+    margin-top: 20px;
   }
   .container {
-    width: 100%; /* 使用100%宽度 */
-    height: 100%; /* 使用100%高度 */
+    flex: 1;
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
+    align-items: center;
   }
   h1 {
     margin: 0;
@@ -43,19 +43,21 @@
   }
   /* 强制横屏样式 */
   @media screen and (orientation: portrait) {
-    .container {
+    body {
       transform: rotate(90deg);
       transform-origin: left top;
-      width: 100vh; /* 高度变宽度 */
-      height: 100vw; /* 宽度变高度 */
+      width: 100vh;
+      height: 100vw;
     }
   }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="header">
   <h1>我的世界2D版</h1>
   <div class="subtitle">甜瓜小依然制作 抖音号:thank.you360</div>
+</div>
+<div class="container">
   <button class="multiplayer-button">多人游戏</button>
 </div>
 <div class="name-input">
