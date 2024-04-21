@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2D Minecraft with Inventory</title>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    #world {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(20, 20px);
+    }
+    .dirt { background-color: #8B4513; }
+    .grass { background-color: #008000; }
+    .stone { background-color: #708090; }
+    .bed { background-color: #FFA07A; }
+    .torch { background-color: #FFD700; }
+    .water { background-color: #0000FF; }
+    .wood { background-color: #A0522D; }
+    .door { background-color: #8B4513; } /* Using dirt color for door */
+    .stone-stairs { background-color: #708090; } /* Using stone color for stairs */
+    .air { background-color: transparent; }
+    #player {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: blue;
+        z-index: 1;
+    }
+    #inventory {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    .inventory-item {
+        width: 20px;
+        height: 20px;
+        background-color: grey;
+        margin: 5px;
+        cursor: pointer;
+    }
+    .inventory-item.selected {
+        border: 2px solid white;
+    }
+</style>
+</head>
+<body>
+<div id="world"></div>
+<div id="inventory"></div>
+<div id="player"></div>
 
+<script>
+    const world = document.getElementById('world');
+    const player = document.getElementById('player');
+    const inventory = document.getElementById('inventory');
+    const blockTypes = ['grass', 'dirt', 'stone', 'bed', 'torch', 'water', 'wood', 'door', 'stone-stairs'];
+    const worldSize = 20;
+    let selectedBlock = 'grass'; // 默认选中的方块
+    let playerPosition = { x: 0, y: 0 };
+
+    // 创建世界
+    function createWorld() {
+        for (let i = 0; i < worldSize * worldSize; i++) {
+            const block = document.createElement('div');
+            block.classList.add('dirt');
+            world.appendChild(block);
+        }
+    }
+
+    // 创建物品栏
+    function createInventory() {
+        blockTypes.forEach(type => {
+            const item = document.createElement('div');
+            item.classList.add('inventory-item');
+            item.style.backgroundColor = getTypeColor(type);
+            item.addEventListener('click', () => selectItem(type));
+            inventory.appendChild(item);
+        });
+    }
+
+    // 选择物品
+    function selectItem(type) {
+        selectedBlock = type;
+        document.querySelectorAll('.inventory-item').forEach(item => {
+            item.classList.remove('selected');
+        });
+        document.querySelector(`.inventory-item[style*="background-color: ${getTypeColor(type)}"]`).classList.add('selected');
+    }
+
+    // 获取方块颜色
+    function getTypeColor(type) {
+        switch (type) {
+            case 'grass':
+                return '#008000';
+            case 'dirt':
+                return '#8B4513';
+            case 'stone':
+                return '#708090';
+            case 'bed':
+                return '#FFA07A';
+            case 'torch':
+                return '#FFD700';
+            case 'water':
+                return '#0000FF';
+            case 'wood':
+                return '#A0522D';
+            case 'door':
+                return '#8B4513';
+            case 'stone-stairs':
+                return '#708090';
+            default:
+                return 'transparent';
+        }
+    }
+
+    // 玩家移动
+    function movePlayer(dx, dy) {
+        playerPosition.x += dx;
+        playerPosition.y += dy;
+        player.style.left = `${playerPosition.x * 20}px`;
+        player.style.top = `${playerPosition.y * 20}px`;
+    }
+
+    // 键盘事件监听
+    function onKeyDown(event) {
+        switch (event.key) {
+            case 'ArrowUp':
+            case 'w':
+                movePlayer(0, -1
