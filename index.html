@@ -53,15 +53,13 @@
   <div class="subtitle">甜瓜小依然制作 抖音号:thank.you360</div>
 </div>
 <div class="container">
-  <button class="multiplayer-button">多人游戏</button>
+  <button class="multiplayer-button" id="multiplayerButton">多人游戏</button>
 </div>
 
 <script>
-  // 假设的服务器端API地址
-  const API_URL = '/api/change-name';
-
-  // 如果localStorage中有存储的名称，则自动填充
-  document.getElementById('username').value = localStorage.getItem('username');
+  document.getElementById('multiplayerButton').addEventListener('click', () => {
+    window.location.href = 'https://mlqidongqi.github.io/yx.html';
+  });
 </script>
 </body>
 </html>
