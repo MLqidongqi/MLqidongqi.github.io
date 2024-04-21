@@ -35,6 +35,7 @@
         height: 20px;
         background-color: blue;
         z-index: 2;
+        border: 1px solid #ccc; /* 添加灰色边框 */
     }
     #inventory {
         display: flex;
@@ -47,6 +48,7 @@
         background-color: grey;
         margin: 5px;
         cursor: pointer;
+        border: 1px solid #ccc; /* 添加灰色边框 */
     }
     .inventory-item.selected {
         border: 2px solid white;
@@ -71,7 +73,8 @@
     function createWorld() {
         for (let i = 0; i < worldSize * worldSize; i++) {
             const block = document.createElement('div');
-            block.classList.add('dirt');
+            block.classList.add('dirt'); // 默认方块为泥土
+            block.style.border = '1px solid #ccc'; // 添加灰色边框
             world.appendChild(block);
         }
     }
@@ -82,49 +85,4 @@
             const item = document.createElement('div');
             item.classList.add('inventory-item');
             item.style.backgroundColor = getTypeColor(type);
-            item.addEventListener('click', () => selectItem(type));
-            inventory.appendChild(item);
-        });
-    }
-
-    // 选择物品
-    function selectItem(type) {
-        selectedBlock = type;
-        document.querySelectorAll('.inventory-item').forEach(item => {
-            item.classList.remove('selected');
-        });
-        document.querySelector(`.inventory-item[style*="background-color: ${getTypeColor(type)}"]`).classList.add('selected');
-    }
-
-    // 获取方块颜色
-    function getTypeColor(type) {
-        switch (type) {
-            case 'grass':
-                return '#008000';
-            case 'dirt':
-                return '#8B4513';
-            case 'stone':
-                return '#708090';
-            case 'bed':
-                return '#FFA07A';
-            case 'torch':
-                return '#FFD700';
-            case 'water':
-                return '#0000FF';
-            case 'wood':
-                return '#A0522D';
-            case 'door':
-                return '#8B4513';
-            case 'stone-stairs':
-                return '#708090';
-            default:
-                return 'transparent';
-        }
-    }
-
-    // 玩家移动
-    function movePlayer(dx, dy) {
-        playerPosition.x += dx;
-        playerPosition.y += dy;
-        player.style.left = `${playerPosition.x * 20}px`;
-        player.style.top = `${playerPosition.y * 20}px
+            item.style.border = '
