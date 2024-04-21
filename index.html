@@ -1,15 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>2D Minecraft-like Game</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的世界2D版</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  .container {
+    width: 500px; /* 5cm */
+    height: 150px; /* 15cm */
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 12px;
+    margin: 4px 0;
+  }
+  .multiplayer-button {
+    padding: 8px 16px;
+    margin: 8px 0;
+    cursor: pointer;
+  }
+  .name-input {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+  }
+</style>
 </head>
 <body>
-  <h1>Enter your name to play</h1>
-  <form id="nameForm">
-    <input type="text" id="playerName" placeholder="Your name" required>
-    <button type="submit">Enter Game</button>
-  </form>
-  <script src="index.js"></script>
+<div class="container">
+  <h1>我的世界2D版</h1>
+  <div class="subtitle">甜瓜小依然制作 抖音号:thank.you360</div>
+  <button class="multiplayer-button">多人游戏</button>
+  <div class="name-input">
+    <input type="text" id="username" placeholder="更改名称">
+    <button id="changeName">确定</button>
+  </div>
+</div>
+
+<script>
+  // 假设的服务器端API地址
+  const API_URL = '/api/change-name';
+
+  document.getElementById('changeName').addEventListener('click', () => {
+    const username = document.getElementById('username').value;
+    if (username) {
+      // 这里应该是发送请求到服务器来检查名称的唯一性
+      // 并存储名称。以下是一个示例请求。
+      fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('名称已更新');
+          // 存储名称到localStorage
+          localStorage.setItem('username', username);
+        } else {
+          alert('名称已存在，请选择其他名称');
+        }
+      })
+      .catch(error => {
+        console.error('请求失败:', error);
+      });
+    }
+  });
+
+  // 如果localStorage中有存储的名称，则自动填充
+  document.getElementById('username').value = localStorage.getItem('username');
+</script>
 </body>
 </html>
