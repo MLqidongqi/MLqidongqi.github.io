@@ -8,6 +8,7 @@
   body {
     margin: 0;
     padding: 0;
+    overflow: hidden; /* 隐藏滚动条 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,11 +16,10 @@
     flex-direction: column;
   }
   .container {
-    width: 300px; /* 近似5cm，根据实际分辨率调整 */
-    height: 900px; /* 近似15cm，根据实际分辨率调整 */
-    border: 1px solid black;
+    width: 100%; /* 使用100%宽度 */
+    height: 100%; /* 使用100%高度 */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
   }
@@ -40,6 +40,15 @@
     position: absolute;
     bottom: 8px;
     right: 8px;
+  }
+  /* 强制横屏样式 */
+  @media screen and (orientation: portrait) {
+    .container {
+      transform: rotate(90deg);
+      transform-origin: left top;
+      width: 100vh; /* 高度变宽度 */
+      height: 100vw; /* 宽度变高度 */
+    }
   }
 </style>
 </head>
