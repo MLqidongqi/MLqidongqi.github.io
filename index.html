@@ -36,11 +36,6 @@
     margin: 8px 0;
     cursor: pointer;
   }
-  .name-input {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-  }
   /* 强制横屏样式 */
   @media screen and (orientation: portrait) {
     body {
@@ -60,42 +55,10 @@
 <div class="container">
   <button class="multiplayer-button">多人游戏</button>
 </div>
-<div class="name-input">
-  <input type="text" id="username" placeholder="更改名称">
-  <button id="changeName">确定</button>
-</div>
 
 <script>
   // 假设的服务器端API地址
   const API_URL = '/api/change-name';
-
-  document.getElementById('changeName').addEventListener('click', () => {
-    const username = document.getElementById('username').value;
-    if (username) {
-      // 这里应该是发送请求到服务器来检查名称的唯一性
-      // 并存储名称。以下是一个示例请求。
-      fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          alert('名称已更新');
-          // 存储名称到localStorage
-          localStorage.setItem('username', username);
-        } else {
-          alert('名称已存在，请选择其他名称');
-        }
-      })
-      .catch(error => {
-        console.error('请求失败:', error);
-      });
-    }
-  });
 
   // 如果localStorage中有存储的名称，则自动填充
   document.getElementById('username').value = localStorage.getItem('username');
