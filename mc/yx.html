@@ -12,6 +12,7 @@
         align-items: center;
         height: 100vh;
         margin: 0;
+        font-family: Arial, sans-serif;
     }
     #world {
         position: relative;
@@ -33,7 +34,7 @@
         width: 20px;
         height: 20px;
         background-color: blue;
-        z-index: 1;
+        z-index: 2;
     }
     #inventory {
         display: flex;
@@ -126,12 +127,4 @@
         playerPosition.x += dx;
         playerPosition.y += dy;
         player.style.left = `${playerPosition.x * 20}px`;
-        player.style.top = `${playerPosition.y * 20}px`;
-    }
-
-    // 键盘事件监听
-    function onKeyDown(event) {
-        switch (event.key) {
-            case 'ArrowUp':
-            case 'w':
-                movePlayer(0, -1
+        player.style.top = `${playerPosition.y * 20}px
