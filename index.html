@@ -79,7 +79,7 @@
 
     // 当前天气
     function fetchWeatherByIP() {
-      const weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=4ff1abb25bbf413390e12aef5dfe2206&q=auto:ip';
+      const weatherApiUrl = 'https://devapi.qweather.com/v7/weather/3d?location=101010100&key=4ff1abb25bbf413390e12aef5dfe2206';
       fetch(weatherApiUrl)
         .then(response => response.json())
         .then(data => {
