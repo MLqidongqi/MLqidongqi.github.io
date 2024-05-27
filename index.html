@@ -37,7 +37,6 @@
     font-size: 18px;
     animation: slideIn 2s ease-in-out;
   }
-  
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -78,17 +77,23 @@
     setInterval(updateSummerCountdown, 24 * 60 * 60 * 1000); // 每天更新一次倒计时
 
     // 当前天气
-    const API_KEY = '4ff1abb25bbf413390e12aef5dfe2206'; // 替换为您的API Key
-    const weatherApiUrl = `https://devapi.qweather.com/v7/weather/now?key=${API_KEY}&location=ip`;
+    const API_KEY = 'SS7BJRBicA2A_F9V9'; // 替换为您的API Key
+    const weatherApiUrl = `https://api.seniverse.com/v3/weather/now.json?key=${API_KEY}&location=ip&language=zh-Hans&unit=c`;
     fetch(weatherApiUrl)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
-        const weatherDescription = data.now.text;
-        const temperature = data.now.temp;
+        const weatherDescription = data.results[0].now.text;
+        const temperature = data.results[0].now.temperature;
         document.getElementById('currentWeather').textContent = `${weatherDescription},${temperature}℃`;
       })
       .catch(error => {
         console.error('Error fetching weather data:', error);
+        document.getElementById('currentWeather').textContent = '无法获取天气信息';
       });
   </script>
 </body>
