@@ -3,63 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我的世界2D版</title>
+<title>儿童节快乐</title>
 <style>
   body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* 隐藏滚动条 */
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  .header {
+    font-family: '微软雅黑', sans-serif;
+    background-color: #f2f2f2;
     text-align: center;
-    margin-top: 20px;
-  }
-  .container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 20px;
   }
   h1 {
-    margin: 0;
+    color: #ff4e50;
+    margin-bottom: 20px;
+    animation: fadeIn 2s ease-in-out;
+  }
+  .wish {
     font-size: 24px;
+    margin-bottom: 10px;
+    animation: slideIn 2s ease-in-out;
   }
-  .subtitle {
-    font-size: 12px;
-    margin: 4px 0;
+  .footer {
+    margin-top: 50px;
+    font-size: 14px;
+    color: #666;
+    animation: fadeIn 2s ease-in-out;
   }
-  .multiplayer-button {
-    padding: 8px 16px;
-    margin: 8px 0;
-    cursor: pointer;
+  .countdown {
+    margin-top: 30px;
+    font-size: 20px;
+    animation: bounceIn 1s ease-in-out;
   }
-  /* 强制横屏样式 */
-  @media screen and (orientation: portrait) {
-    body {
-      transform: rotate(90deg);
-      transform-origin: left top;
-      width: 100vh;
-      height: 100vw;
-    }
+  .weather {
+    margin-top: 20px;
+    font-size: 18px;
+    animation: slideIn 2s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideIn {
+    from { transform: translateX(-100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes bounceIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
   }
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>我的世界2D版</h1>
-  <div class="subtitle">甜瓜小依然制作 抖音号:thank.you360</div>
-</div>
-<div class="container">
-  <button class="multiplayer-button" id="multiplayerButton">多人游戏</button>
-</div>
+  <h1>我是王浩然，我祝大家儿童节快乐。</h1>
+  <div class="wish">一帆风顺、二龙戏珠、三羊开泰、四季平安、五福临门、六六大顺、七星报喜、八面威风、九九归一、十全十美。</div>
+  <div class="countdown">
+    <p>暑假倒计时：</p>
+    <p id="summerCountdown"></p>
+  </div>
+  <div class="weather">
+    <p>当前天气：</p>
+    <p id="currentWeather"></p>
+  </div>
+  <div class="footer">祝愿所有的小朋友节日快乐，健康成长！</div>
 
-<script>
-  document.getElementById('multiplayerButton').addEventListener('click', () => {
-    window.location.href = 'https://mlqidongqi.github.io/mc/yx.html';
-  });
-</script>
+  <script>
+    // 暑假倒计时
+    const summerVacationDate = new Date('2024-07-01'); // 假设暑假开始日期为2024年7月1日
+    function updateSummerCountdown() {
+      const now = new Date();
+      const timeDifference = summerVacationDate - now;
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      document.getElementById('summerCountdown').textContent = days + '天';
+    }
+    updateSummerCountdown();
+    setInterval(updateSummerCountdown, 24 * 60 * 60 * 1000); // 每天更新一次倒计时
+
+    // 当前天气
+    function fetchWeatherByIP() {
+      const weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=auto:ip';
+      fetch(weatherApiUrl)
+        .then(response => response.json())
+        .then(data => {
+          const weatherDescription = data.current.condition.text;
+          const temperature = data.current.temp_c;
+          const location = data.location.name; // 获取到的位置信息
+          document.getElementById('currentWeather').textContent = `${location}：${weatherDescription}，${temperature}°C`;
+        })
+        .catch(error => {
+          console.error('Error fetching weather data:', error);
+          document.getElementById('currentWeather').textContent = '无法获取天气信息';
+        });
+    }
+
+    fetchWeatherByIP();
+  </script>
 </body>
 </html>
