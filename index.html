@@ -1,100 +1,131 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>儿童节快乐</title>
-<style>
-  body {
-    font-family: '微软雅黑', sans-serif;
-    background-color: #f2f2f2;
-    text-align: center;
-    padding: 20px;
-  }
-  h1 {
-    color: #ff4e50;
-    margin-bottom: 20px;
-    animation: fadeIn 2s ease-in-out;
-  }
-  .wish {
-    font-size: 24px;
-    margin-bottom: 10px;
-    animation: slideIn 2s ease-in-out;
-  }
-  .footer {
-    margin-top: 50px;
-    font-size: 14px;
-    color: #666;
-    animation: fadeIn 2s ease-in-out;
-  }
-  .countdown {
-    margin-top: 30px;
-    font-size: 20px;
-    animation: bounceIn 1s ease-in-out;
-  }
-  .weather {
-    margin-top: 20px;
-    font-size: 18px;
-    animation: slideIn 2s ease-in-out;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes slideIn {
-    from { transform: translateX(-100px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  @keyframes bounceIn {
-    from { transform: scale(0); }
-    to { transform: scale(1); }
-  }
-</style>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" >
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+<title>Aliplayer Online Settings</title>
+<link rel="stylesheet" href="https://g.alicdn.com/apsara-media-box/imp-web-player/2.26.0/skins/default/aliplayer-min.css" />
+<script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/apsara-media-box/imp-web-player/2.26.0/aliplayer-min.js"></script>
 </head>
 <body>
-  <h1>儿童节快乐</h1>
-  <div class="wish">一帆风顺、二龙戏珠、三羊开泰、四季平安、五福临门、六六大顺、七星报喜、八面威风、九九归一、十全十美。</div>
-  <div class="countdown">
-    <p>暑假倒计时：</p>
-    <p id="summerCountdown"></p>
-  </div>
-  <div class="weather">
-    <p>当前天气：</p>
-    <p id="currentWeather"></p>
-  </div>
-  <div class="footer">祝愿所有的小朋友节日快乐，健康成长！</div>
-
-  <script>
-    // 暑假倒计时
-    const summerVacationDate = new Date('2024-07-01'); // 假设暑假开始日期为2024年7月1日
-    function updateSummerCountdown() {
-      const now = new Date();
-      const timeDifference = summerVacationDate - now;
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      document.getElementById('summerCountdown').textContent = days + '天';
-    }
-    updateSummerCountdown();
-    setInterval(updateSummerCountdown, 24 * 60 * 60 * 1000); // 每天更新一次倒计时
-
-    // 当前天气
-    const API_KEY = 'PZelgg_IwAXmwCN5n'; // 替换为您的API Key
-    const weatherApiUrl = `https://api.seniverse.com/v3/weather/now.json?key=${API_KEY}&location=ip&language=zh-Hans&unit=c`;
-    fetch(weatherApiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+<div class="prism-player" id="player-con"></div>
+<script>
+var player = new Aliplayer({
+  "id": "player-con",
+  "source": "https://github.com/MLqidongqi/MLqidongqi.github.io/blob/main/BMjAyMzA2MjIxNjMzMTVfMzI1MjEwNjY4N18xMDYxNjA0NDQ4MjFfMl8z_b_Be56cf8087c20e045f50270eed8674a9e.mp4",
+  "width": "100%",
+  "height": "500px",
+  "autoplay": true,
+  "isLive": false,
+  "rePlay": false,
+  "playsinline": true,
+  "isVBR": true,
+  "preload": true,
+  "controlBarVisibility": "hover",
+  "useH5Prism": true,
+  "extraInfo": {
+    "crossOrigin": "anonymous"
+  },
+  "skinLayout": [
+    {
+      "name": "bigPlayButton",
+      "align": "blabs",
+      "x": 30,
+      "y": 80
+    },
+    {
+      "name": "H5Loading",
+      "align": "cc"
+    },
+    {
+      "name": "errorDisplay",
+      "align": "tlabs",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "name": "infoDisplay"
+    },
+    {
+      "name": "tooltip",
+      "align": "blabs",
+      "x": 0,
+      "y": 56
+    },
+    {
+      "name": "thumbnail"
+    },
+    {
+      "name": "controlBar",
+      "align": "blabs",
+      "x": 0,
+      "y": 0,
+      "children": [
+        {
+          "name": "progress",
+          "align": "blabs",
+          "x": 0,
+          "y": 44
+        },
+        {
+          "name": "playButton",
+          "align": "tl",
+          "x": 15,
+          "y": 12
+        },
+        {
+          "name": "timeDisplay",
+          "align": "tl",
+          "x": 10,
+          "y": 7
+        },
+        {
+          "name": "fullScreenButton",
+          "align": "tr",
+          "x": 10,
+          "y": 12
+        },
+        {
+          "name": "subtitle",
+          "align": "tr",
+          "x": 15,
+          "y": 12
+        },
+        {
+          "name": "setting",
+          "align": "tr",
+          "x": 15,
+          "y": 12
+        },
+        {
+          "name": "volume",
+          "align": "tr",
+          "x": 5,
+          "y": 10
+        },
+        {
+          "name": "snapshot",
+          "align": "tr",
+          "x": 10,
+          "y": 12
         }
-        return response.json();
-      })
-      .then(data => {
-        const weatherDescription = data.results[0].now.text;
-        const temperature = data.results[0].now.temperature;
-        document.getElementById('currentWeather').textContent = `${weatherDescription},${temperature}℃`;
-      })
-      .catch(error => {
-        console.error('Error fetching weather data:', error);
-        document.getElementById('currentWeather').textContent = '定位错误';
-      });
-  </script>
+      ]
+    }
+  ]
+}, function (player) {
+    console.log("The player is created");
+  }
+);
+/* h5截图按钮, 截图成功回调 */
+player.on('snapshoted', function (data) {
+  var pictureData = data.paramData.base64
+  var downloadElement = document.createElement('a')
+  downloadElement.setAttribute('href', pictureData)
+  var fileName = 'Aliplayer' + Date.now() + '.png'
+  downloadElement.setAttribute('download', fileName)
+  downloadElement.click()
+  pictureData = null
+})
+</script>
 </body>
-</html>
