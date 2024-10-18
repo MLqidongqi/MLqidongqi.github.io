@@ -1,1 +1,44 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>⚡你被骗了⚡<title>
+<big>🤓你被骗了🤓<big>
+<br>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge" >
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+<title>Aliplayer Online Settings</title>
+<link rel="stylesheet" href="https://g.alicdn.com/apsara-media-box/imp-web-player/2.26.0/skins/default/aliplayer-min.css" />
+<script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/apsara-media-box/imp-web-player/2.26.0/aliplayer-min.js"></script>
+</head>
+<body>
+<div class="prism-player" id="player-con"></div>
+<script>
+var player = new Aliplayer({
+  "id": "player-con",
+  "source": "https://mlqidongqi.github.io/nbpl.mp4",
+  "width": "100%",
+  "height": "500px",
+  "autoplay": true,
+  "isLive": false,
+  "rePlay": false,
+  "playsinline": true,
+  "preload": true,
+  "controlBarVisibility": "hover",
+  "useH5Prism": true,
+  "skinLayout": [
+    {
+      "name": "controlBar",
+      "align": "blabs",
+      "x": 0,
+      "y": 0,
+      "children": []
+    }
+  ]
+}, function (player) {
+    console.log("The player is created");
+  }
+);
+</script>
+</body>
