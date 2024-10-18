@@ -29,6 +29,29 @@
       width: 100px;
       height: 100px;
     }
+
+    a.button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: gray;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
+
+    a.button:before {
+      content: "\1F310";
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    a.button:hover {
+      background-color: darkgray;
+    }
   </style>
 </head>
 
@@ -37,6 +60,7 @@
     <div class="content-box">
       <img src="https://img.picui.cn/free/2024/10/19/6712ed230db35.jpg" alt="Your Avatar">
       <h1>MC_XYR</h1>
+      <a href="你的 GitHub 主页链接" class="button">GitHub</a>
     </div>
   </div>
 </body>
