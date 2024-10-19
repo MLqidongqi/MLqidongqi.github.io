@@ -1,35 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
   <title>MC_XYR的主页</title>
   <style>
+    /* 全局样式 */
     body {
       margin: 0;
       padding: 0;
       background: linear-gradient(to bottom right, #4CAF50, #2196F3);
-    }
-
-  .main-container {
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
     }
 
-  .content-box {
+    /* 内容容器样式 */
+   .main-container {
+      text-align: center;
       background-color: rgba(255, 255, 255, 0.5);
       padding: 20px;
       border-radius: 10px;
-      text-align: center;
     }
 
+    /* 头像样式 */
     img {
       border-radius: 50%;
       width: 100px;
       height: 100px;
     }
 
+    /* 按钮样式 */
     a.button {
       display: inline-block;
       padding: 10px 20px;
@@ -43,6 +46,7 @@
 
     a.button:before {
       content: "\1F310";
+      font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "EmojiOne Color Emoji";
       position: absolute;
       left: 10px;
       top: 50%;
@@ -57,11 +61,9 @@
 
 <body>
   <div class="main-container">
-    <div class="content-box">
-      <img src="https://img.picui.cn/free/2024/10/19/6712ed230db35.jpg" alt="Your Avatar">
-      <h1>MC_XYR</h1>
-      <a href="https://github.com/MLqidongqi?tab=repositories" class="button">GitHub</a>
-    </div>
+    <img src="https://img.picui.cn/free/2024/10/19/6712ed230db35.jpg" alt="Your Avatar">
+    <h1>MC_XYR</h1>
+    <a href="https://github.com/MLqidongqi?tab=repositories" class="button">GitHub</a>
   </div>
 </body>
 
