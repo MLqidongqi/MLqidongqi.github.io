@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>MC_XYR的主页</title>
+  <title>MC_XYR 的主页</title>
   <style>
     /* 全局样式 */
     body {
@@ -48,8 +48,13 @@
     }
 
     a.bilibili-button {
-      background-color: #B33F62;
-      padding: 10px 40px; /* 确保与GitHub按钮的padding一致 */
+      background-color: pink;
+      padding: 10px 40px;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      position: relative;
+      transition: background-color 0.3s ease;
     }
 
     a.button svg {
@@ -63,6 +68,10 @@
 
     a.button:hover {
       background-color: darkgray;
+    }
+
+    a.bilibili-button:hover {
+      background-color: lightpink;
     }
 
     @keyframes gradientAnimation {
@@ -85,7 +94,7 @@
 
     /* 响应式设计 */
     @media (max-width: 600px) {
-   .main-container {
+    .main-container {
         padding: 10px;
       }
 
@@ -106,7 +115,7 @@
     <img src="https://img.picui.cn/free/2024/10/19/6712ed230db35.jpg" alt="Your Avatar">
     <h1>MC_XYR</h1>
     <p>我是 MC_XYR，你好！</p>
-    <a href="https://space.bilibili.com/" class="bilibili-button">
+    <a href="https://space.bilibili.com/2042684543" class="bilibili-button">
       <svg viewBox="0 0 16 16" version="1.1" aria-labelledby="title" role="img">
         <title>Bilibili Icon</title>
         <path fill="#fff" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0.67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2.27 2.2 1.02.64 1.65 1.49 1.65 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0.21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
