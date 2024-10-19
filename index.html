@@ -14,8 +14,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(to bottom right, #FFB78C, #FF8C8C); /* 柔和的橙色和红色 */
-      animation: gradientAnimation 10s linear infinite; /* 10 秒的平滑过渡动画 */
+      background: linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+      animation: gradientAnimation 10s linear infinite;
     }
 
     /* 内容容器样式 */
@@ -24,6 +24,8 @@
       background-color: rgba(255, 255, 255, 0.5);
       padding: 20px;
       border-radius: 10px;
+      max-width: 90%;
+      box-sizing: border-box;
     }
 
     /* 头像样式 */
@@ -73,6 +75,22 @@
       }
       100% {
         background: linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+      }
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 600px) {
+     .main-container {
+        padding: 10px;
+      }
+
+      img {
+        width: 80px;
+        height: 80px;
+      }
+
+      a.button {
+        padding: 8px 30px;
       }
     }
   </style>
