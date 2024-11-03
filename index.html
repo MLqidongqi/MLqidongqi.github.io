@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>MC_XYR 的主页</title>
+  <title>MC_XYR的主页</title>
   <style>
     /* 全局样式 */
     body {
@@ -28,119 +28,399 @@
     }
 
     /* 内容容器样式 */
-  .main-container {
-      text-align: center;
-      background-color: rgba(255, 255, 255, 0.5);
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 90%;
-      box-sizing: border-box;
+ .main-container {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 90%;
+        box-sizing: border-box;
     }
 
     /* 头像样式 */
     img {
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
     }
 
     /* 按钮样式 */
     a.button {
-      display: inline-block;
-      padding: 10px 40px;
-      background-color: gray;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      position: relative;
-      transition: background-color 0.3s ease;
+        display: inline-block;
+        padding: 10px 40px;
+        background-color: gray;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        position: relative;
+        transition: background-color 0.3s ease;
+    }
+
+    a.github-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #24292e;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
     }
 
     a.bilibili-button {
-      background-color: pink;
-      padding: 10px 40px;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      position: relative;
-      transition: background-color 0.3s ease;
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: pink;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        position: relative;
+        transition: background-color 0.3s ease;
+    }
+
+    a.afdian-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #D8BFD8;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        position: relative;
+        transition: background-color 0.3s ease;
     }
 
     a.button:hover {
-      background-color: darkgray;
+        background-color: darkgray;
+    }
+
+    a.github-button:hover {
+        background-color: #181a1d;
     }
 
     a.bilibili-button:hover {
-      background-color: lightpink;
+        background-color: lightpink;
+    }
+
+    a.afdian-button:hover {
+        background-color: #C8A2C8;
+    }
+
+    /* 菜单按钮样式 */
+  .menu-toggle {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+  .menu-toggle span {
+        display: block;
+        width: 30px;
+        height: 3px;
+        background-color: white;
+        margin-bottom: 6px;
+        transition: all 0.3s ease;
+    }
+
+    /* 侧边栏样式（修改这里） */
+  .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5); /* 设置半透明 */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        z-index: 1;
+    }
+
+  .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        padding-top: 50px;
+    }
+
+  .sidebar ul li {
+        padding: 10px;
+    }
+
+  .sidebar ul li a {
+        text-decoration: none;
+        color: black;
+    }
+
+    /* 动画类样式 */
+  .sidebar.active {
+        left: 0;
+    }
+
+  .menu-toggle.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-6px, 6px);
+    }
+
+  .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+  .menu-toggle.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-6px, -6px);
+    }
+
+    /* 自定义弹窗样式 */
+  .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px; /* 弹窗变大 */
+        height: 300px; /* 弹窗变大 */
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.3s ease; /* 添加淡入动画 */
+        cursor: move; /* 设置鼠标样式为移动光标 */
+        z-index: 3; /* 设置弹窗的图层优先级较高 */
+    }
+
+  .popup-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+  .popup-close {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 4; /* 设置关闭按钮的图层优先级更高 */
+        opacity: 1; /* 初始隐藏叉叉 */
+        transition: opacity 0.2s ease; /* 过渡效果 */
+    }
+
+  .popup-close:hover {
+        opacity: 1; /* 鼠标悬停时显示叉叉 */
+    }
+
+  .popup-close::before,
+  .popup-close::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 2px;
+        background-color: white;
+    }
+
+  .popup-close::before {
+        transform: rotate(45deg);
+    }
+
+  .popup-close::after {
+        transform: rotate(-45deg);
+    }
+
+  .popup-line {
+        position: absolute;
+        top: 60px; /* 调整线的位置，拉开与叉叉的距离 */
+        left: 10px;
+        width: calc(100% - 20px);
+        height: 1px;
+        background-color: gray;
+        animation: fadeIn 0.3s ease; /* 添加淡入动画 */
+    }
+
+  .popup-title {
+        position: absolute;
+        top: 70px; /* 标题在分界线中间下方，调整位置 */
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 24px; /* 标题变大 */
+        animation: fadeIn 0.3s ease; /* 添加淡入动画 */
+    }
+
+  .popup-text {
+        position: absolute;
+        top: 120px; /* 调整文本位置 */
+        left: 20px; /* 距离左边边缘一定距离 */
+        width: 360px; /* 限制文本宽度，使其不占满整行 */
+        text-align: left;
+        font-size: 16px;
+        animation: fadeIn 0.3s ease;
+    }
+
+  .popup-new-text {
+        position: absolute;
+        top: 150px; /* 调整新文本位置 */
+        left: 20px; /* 距离左边边缘一定距离 */
+        width: 360px; /* 限制文本宽度，使其不占满整行 */
+        text-align: left;
+        font-size: 16px;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
 
     @keyframes gradientAnimation {
-      0% {
-        background: -webkit-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-        background: -o-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-        background: -moz-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-        background: linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-      }
-      25% {
-        background: -webkit-linear-gradient(to top left, #FFB78C, #FF8C8C);
-        background: -o-linear-gradient(to top left, #FFB78C, #FF8C8C);
-        background: -moz-linear-gradient(to top left, #FFB78C, #FF8C8C);
-        background: linear-gradient(to top left, #FFB78C, #FF8C8C);
-      }
-      50% {
-        background: -webkit-linear-gradient(to top right, #FFB78C, #FF8C8C);
-        background: -o-linear-gradient(to top right, #FFB78C, #FF8C8C);
-        background: -moz-linear-gradient(to top right, #FFB78C, #FF8C8C);
-        background: linear-gradient(to top right, #FFB78C, #FF8C8C);
-      }
-      75% {
-        background: -webkit-linear-gradient(to bottom left, #FFB78C, #FF8C8C);
-        background: -o-linear-gradient(to bottom left, #FFB78C, #FF8C8C);
-        background: -moz-linear-gradient(to bottom left, #FFB78C, #FF8C8C);
-        background: linear-gradient(to bottom left, #FFB78C, #FF8C8C);
-      }
-      100% {
-        background: -webkit-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-        background: -o-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-        background: -moz-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-        background: linear-gradient(to bottom right, #FFB78C, #FF8C8C);
-      }
+        0% {
+            background: -webkit-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+            background: -o-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+            background: -moz-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+            background: linearGradient(to bottom right, #FFB78C, #FF8C8C);
+        }
+
+        25% {
+            background: -webkit-linear-gradient(to top left, #FFB78C, #FF8C8C);
+            background: -o-linear-gradient(to top left, #FFB78C, #FF8C8C);
+            background: -moz-linear-gradient(to top left, #FFB78C, #FF8C8C);
+            background: linearGradient(to top left, #FFB78C, #FF8C8C);
+        }
+
+        50% {
+            background: -webkit-linear-gradient(to top right, #FFB78C, #FF8C8C);
+            background: -o-linear-gradient(to top right, #FFB78C, #FF8C8C);
+            background: -moz-linear-gradient(to top right, #FFB78C, #FF8C8C);
+            background: linearGradient(to top right, #FFB78C, #FF8C8C);
+        }
+
+        75% {
+            background: -webkit-linear-gradient(to bottom left, #FFB78C, #FF8C8C);
+            background: -o-linear-gradient(to bottom left, #FFB78C, #FF8C8C);
+            background: -moz-linear-gradient(to bottom left, #FFB78C, #FF8C8C);
+            background: linearGradient(to bottom left, #FFB78C, #FF8C8C);
+        }
+
+        100% {
+            background: -webkit-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+            background: -o-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+            background: -moz-linear-gradient(to bottom right, #FFB78C, #FF8C8C);
+            background: linearGradient(to bottom right, #FFB78C, #FF8C8C);
+        }
     }
 
     /* 响应式设计 */
     @media (max-width: 600px) {
-    .main-container {
-        padding: 10px;
-      }
+      .main-container {
+            padding: 10px;
+        }
 
-      img {
-        width: 80px;
-        height: 80px;
-      }
+        img {
+            width: 80px;
+            height: 80px;
+        }
 
-      a.button {
-        padding: 8px 30px;
-      }
+        a.button {
+            padding: 8px 30px;
+        }
+
+        a.github-button {
+            padding: 8px 15px;
+        }
+
+        a.bilibili-button {
+            padding: 8px 30px;
+        }
+        a.afdian-button {
+            padding: 8px 15px;
+        }
     }
   </style>
 </head>
 
 <body>
-  <div class="main-container">
-    <img src="https://img.picui.cn/free/2024/10/19/6712ed230db35.jpg" alt="Your Avatar">
-    <h1>MC_XYR</h1>
-    <p>我是 MC_XYR，一个爱好编程的人。</p>
-    <p>b站名
-      MC-XYR
-    </p>
-      <p>爱发电首页
-          <n\>
-      https://ifdian.net/a/MC_XYR
-    </p>
-    <h1>项目<h1>
-    <p>极限国度MC 模组、整合包</p>
-    <p>网易之黑神话-悟空</p>
+  <div class="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
+  <nav class="sidebar">
+    <ul>
+      <li><a href="https://xiaoyiran.rth1.xyz/%E8%B4%A6%E5%8F%B7.html">主页v1（老版 - 2023）</a></li>
+      <li><a href="#" onclick="showPopup()">开发项目</a></li>
+    </ul>
+  </nav>
+  <div class="main-container">
+    <img src="https://MLqidongqi.github.io/MC_XYR.jpg" alt="MC_XYR">
+    <h1>MC_XYR</h1>
+    <p>我是MC_XYR，一个爱好编程的人。</p>
+    <a href="https://space.bilibili.com/2042684543?spm_id_from=333.1007.0.0" class="bilibili-button">bilibili</a>
+    <a href="https://ifdian.net/a/MC_XYR" class="afdian-button">爱发电</a>
+    <a href="https://github.com/MLqidongqi" class="github-button">GitHub</a>
+  </div>
+  <div class="popup">
+    <div class="popup-header"></div>
+    <div class="popup-close" onclick="hidePopup()"></div>
+    <div class="popup-line"></div>
+    <div class="popup-title">开发项目</div>
+    <div class="popup-text">极限国度MC 模组、整合包</div>
+    <div class="popup-new-text">网易审核之黑神话 - 悟空</div>
+    <!-- 这里你可以添加自己的内容 -->
+  </div>
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const popup = document.querySelector('.popup');
+    const popupHeader = document.querySelector('.popup-header');
+    const popupClose = document.querySelector('.popup-close');
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    menuToggle.addEventListener('click', function () {
+      this.classList.toggle('active');
+      sidebar.classList.toggle('active');
+    });
+
+    popupHeader.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      offsetX = e.clientX - popup.offsetLeft;
+      offsetY = e.clientY - popup.offsetTop;
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+
+    function onMouseMove(e) {
+      if (isDragging) {
+        const newX = e.clientX - offsetX;
+        const newY = e.clientY - offsetY;
+        popup.style.left = newX + 'px';
+        popup.style.top = newY + 'px';
+      }
+    }
+
+    function onMouseUp() {
+      isDragging = false;
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    function showPopup() {
+      popup.style.display = 'block';
+    }
+
+    function hidePopup() {
+      popup.style.display = 'none';
+    }
+  </script>
 </body>
 
 </html>
