@@ -1,1060 +1,165 @@
  
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>拼多多"现金提现"骗局完整模拟</title>
+    <title>助力抽奖模拟</title>
     <style>
-        body {
-            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-        
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            background: linear-gradient(135deg, #ff4f81, #ff6b6b);
-            color: white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .progress-container {
-            background-color: #eee;
-            border-radius: 20px;
-            height: 30px;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .progress-bar {
-            background: linear-gradient(90deg, #ff9500, #ff5e3a);
-            border-radius: 20px;
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 0 3px rgba(0,0,0,0.5);
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #ff9500, #ff5e3a);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 20px 0;
-            box-shadow: 0 4px 8px rgba(255, 94, 58, 0.3);
-        }
-        
-        .btn:hover {
-            opacity: 0.9;
-        }
-        
-        .btn-disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        
-        .reward-section {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .warning {
-            background-color: #fff8e1;
-            padding: 15px;
-            border-left: 4px solid #ffc107;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .friend-help {
-            background-color: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-        
-        .friend-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-        }
-        
-        .friend-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #bbdefb;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0d47a1;
-            font-weight: bold;
-        }
-        
-        /* 抽奖转盘样式 */
-        .wheel-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-        }
-        
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            border: 8px solid #ff9500;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-        }
-        
-        .wheel-section {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: bottom right;
-            display: flex;
-            align-items: center;
-            box-sizing: border-box;
-            padding-left: 30px;
-        }
-        
-        .wheel-pointer {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 40px solid #ff5e3a;
-            z-index: 10;
-        }
-        
-        .wheel-center {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-        
-        .wheel-center-text {
-            font-weight: bold;
-            color: #ff5e3a;
-        }
-        
-        .reward-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-        
-        .reward-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 80%;
-        }
-        
-        .reward-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #ff5e3a;
-        }
-        
-        .reward-amount {
-            font-size: 36px;
-            font-weight: bold;
-            color: #ff5e3a;
-            margin: 20px 0;
-        }
-        
-        .reward-next {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #666;
-        }
-        
-        .tutorial {
-            background-color: #e8f5e9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; }
+        .panel { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; color: #e74c3c; margin-bottom: 20px; }
+        .progress { height: 30px; background: #f1f1f1; border-radius: 15px; margin: 20px 0; }
+        .progress-bar { height: 100%; border-radius: 15px; background: #e74c3c; width: 0%; transition: width 0.5s; }
+        .btn { display: block; width: 100%; padding: 12px; background: #e74c3c; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .reward { margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 初始活动页面 -->
-        <div id="activity-page">
-            <div class="header">
-                <h1>恭喜您获得600元现金提现机会！</h1>
-                <p>参与抽奖即可获得现金奖励</p>
-            </div>
-            
-            <div class="warning">
-                <strong>⚠️ 注意：</strong>本页面为模拟拼多多现金提现骗局设计，旨在揭露此类活动的欺骗性质。
-            </div>
-            
-            <p>已有<span id="user-count">1,234,567</span>人成功提现！</p>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress-text">0.00/600.00元</div>
-                </div>
-            </div>
-            
-            <p>参与抽奖，赢取现金奖励，集满600元即可提现！</p>
-            
-            <button class="btn" id="start-btn">立即抽奖</button>
-            
-            <div class="reward-section">
-                <h3>活动规则：</h3>
-                <ul>
-                    <li>新用户可获得3次免费抽奖机会</li>
-                    <li>每次抽奖可获得随机金额奖励</li>
-                    <li>邀请好友助力可获得额外抽奖机会</li>
-                    <li>提现完全免费，无任何隐藏费用</li>
-                </ul>
-            </div>
-            
-            <div class="tutorial">
-                <h3>体验说明：</h3>
-                <p>本模拟将带您完整体验拼多多现金提现活动的全过程，包括：</p>
-                <ol>
-                    <li>初始抽奖获得看似可观的奖励</li>
-                    <li>接近目标时奖励大幅减少</li>
-                    <li>要求邀请好友助力</li>
-                    <li>不断变换奖励单位（金币→碎片→贝壳→珍珠）</li>
-                    <li>最终揭露不可能达到的提现门槛</li>
-                </ol>
+    <div id="start-page" class="panel">
+        <div class="header">
+            <h2>恭喜获得600元提现机会！</h2>
+            <p>已有1,234,567人成功提现</p>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <p>当前进度：<span id="current-amount">0.00</span>/600.00元</p>
+        <button id="start-btn" class="btn">立即参与</button>
+    </div>
+
+    <div id="game-page" class="panel hidden">
+        <div class="header">
+            <h2>助力抽奖</h2>
+            <p>剩余机会：<span id="chances">3</span>次</p>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" id="game-progress"></div>
+        </div>
+        <p>当前进度：<span id="game-amount">0.00</span>/600.00元</p>
+        <button id="help-btn" class="btn">立即助力</button>
+        
+        <div id="reward-area" class="hidden">
+            <div class="reward">
+                <p>获得奖励：<span id="reward">0.5元</span></p>
+                <p id="next-step">继续助力可快速提现！</p>
             </div>
         </div>
         
-        <!-- 抽奖页面 -->
-        <div id="lottery-page" class="hidden">
-            <div class="header">
-                <h1>幸运大转盘</h1>
-                <p>转动赢取现金奖励</p>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="lottery-progress-bar">
-                    <div class="progress-text" id="progress-text">0.00/600.00元</div>
-                </div>
-            </div>
-            
-            <p>剩余抽奖机会：<span id="chance-count">3</span>次</p>
-            
-            <div class="wheel-container">
-                <div class="wheel-pointer"></div>
-                <div class="wheel" id="wheel">
-                    <!-- 转盘分区将通过JS动态生成 -->
-                </div>
-                <div class="wheel-center">
-                    <div class="wheel-center-text">抽奖</div>
-                </div>
-            </div>
-            
-            <button class="btn" id="spin-btn">立即抽奖</button>
-            <button class="btn btn-disabled" id="invite-btn" disabled>邀请好友获得更多机会</button>
-            
-            <div id="friend-help-section" class="hidden">
-                <h3>邀请好友助力</h3>
-                <div class="friend-help">
-                    <div class="friend-item">
-                        <div class="friend-avatar">张</div>
-                        <div>张三为您助力 +1次抽奖机会</div>
-                    </div>
-                    <div class="friend-item">
-                        <div class="friend-avatar">李</div>
-                        <div>李四为您助力 +1次抽奖机会</div>
-                    </div>
-                </div>
-                
-                <button class="btn" id="share-btn">分享给好友助力</button>
-            </div>
-        </div>
-        
-        <!-- 最终揭露页面 -->
-        <div id="final-page" class="hidden">
-            <div class="header">
-                <h1>恭喜您集满600元！</h1>
-                <p>点击查看提现结果</p>
-            </div>
-            
-            <div class="warning">
-                <h2>⚠️ 提现门槛揭露</h2>
-                <p>系统提示：</p>
-                <p><strong>实际提现需要账户余额达到10,000元</strong></p>
-                <p>这是拼多多现金提现活动的常见骗局：</p>
-                
-                <div class="reward-section">
-                    <h3>骗局全过程回顾：</h3>
-                    <ol>
-                        <li><strong>诱人入口</strong>：展示高额现金奖励吸引参与</li>
-                        <li><strong"快速进展</strong>：初期奖励丰厚，进度快速</li>
-                        <li><strong>难度陡增</strong>：接近目标时奖励大幅减少</li>
-                        <li><strong>社交裂变</strong>：强制要求邀请好友助力</li>
-                        <li><strong>单位变换</strong>：金币→碎片→贝壳→珍珠不断变化</li>
-                        <li><strong>隐藏门槛</strong>：最终设置不可能达到的提现条件</li>
-                    </ol>
-                </div>
-                
-                <div class="reward-section">
-                    <h3>此类活动的真实目的：</h3>
-                    <ul>
-                        <li>获取用户个人信息和社交关系</li>
-                        <li>增加APP活跃度和用户留存</li>
-                        <li>通过广告和诱导消费获利</li>
-                        <li>极少有用户能真正提现成功</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <button class="btn" id="restart-btn">重新体验骗局过程</button>
-            <button class="btn" id="learn-more-btn">了解更多防骗知识</button>
+        <div id="invite-area" class="hidden">
+            <p>机会已用完，邀请好友获得更多助力机会</p>
+            <button id="invite-btn" class="btn">邀请好友</button>
         </div>
     </div>
 
-    <!-- 奖励弹窗 -->
-    <div id="reward-popup" class="reward-popup hidden">
-        <div class="reward-content">
-            <div class="reward-title">恭喜您获得</div>
-            <div class="reward-amount" id="reward-amount">0.50元</div>
-            <div class="reward-next" id="reward-next">再抽几次就能提现啦！</div>
-            <button class="btn" id="close-reward-btn">确定</button>
+    <div id="result-page" class="panel hidden">
+        <div class="header">
+            <h2>提现失败！</h2>
         </div>
+        <div class="reward">
+            <p>您已集满600元，但实际提现需要10,000元</p>
+            <p>这是典型的抽奖骗局：</p>
+            <ul>
+                <li>初期奖励丰厚吸引参与</li>
+                <li>接近目标时难度陡增</li>
+                <li>强制邀请好友助力</li>
+                <li>最终设置不可能达到的门槛</li>
+            </ul>
+        </div>
+        <button id="restart-btn" class="btn">重新体验</button>
     </div>
 
     <script>
-        // 当前进度
+        // 游戏数据
         let currentAmount = 0;
         let chances = 3;
         let stage = 0;
         const stages = [
-            { min: 0, max: 59.9, rewards: [5, 3, 2, 1, 0.8, 0.5, 0.3, 0.2], unit: "元", nextText: "继续抽奖，快速累积现金！" },
-            { min: 59.9, max: 59.9, rewards: [10, 8, 5, 3, 1], unit: "金币", nextText: "再集10个金币即可突破59.9元" },
-            { min: 59.9, max: 59.9, rewards: [9, 7, 5, 3, 1], unit: "碎片", nextText: "再集9个碎片即可突破59.9元" },
-            { min: 59.9, max: 59.9, rewards: [5, 4, 3, 2, 1], unit: "贝壳", nextText: "再集5个贝壳即可突破59.9元" },
-            { min: 59.9, max: 59.9, rewards: [20, 15, 10, 5, 1], unit: "珍珠", nextText: "再集20个珍珠即可突破59.9元" },
-            { min: 59.9, max: 600, rewards: [0.1, 0.08, 0.05, 0.03, 0.01], unit: "元", nextText: "恭喜您集满600元！点击查看真相" }
+            { max: 59.9, rewards: [5, 3, 2, 1, 0.8, 0.5], text: "继续助力可快速提现！" },
+            { max: 59.9, rewards: [10, 8, 5, 3], text: "需要收集10个金币" },
+            { max: 59.9, rewards: [9, 7, 5], text: "需要收集9个碎片" },
+            { max: 59.9, rewards: [5, 4, 3], text: "需要收集5个贝壳" },
+            { max: 600, rewards: [0.1, 0.08, 0.05], text: "即将提现！" }
         ];
-        
-        // 转盘奖品
-        const wheelPrizes = [
-            { text: "5元", value: 5, color: "#FF5252" },
-            { text: "3元", value: 3, color: "#FF4081" },
-            { text: "2元", value: 2, color: "#E040FB" },
-            { text: "1元", value: 1, color: "#7C4DFF" },
-            { text: "0.8元", value: 0.8, color: "#536DFE" },
-            { text: "0.5元", value: 0.5, color: "#448AFF" },
-            { text: "0.3元", value: 0.3, color: "#40C4FF" },
-            { text: "0.2元", value: 0.2, color: "#18FFFF" }
-        ];
-        
-        // DOM元素
-        const activityPage = document.getElementById('activity-page');
-        const lotteryPage = document.getElementById('lottery-page');
-        const finalPage = document.getElementById('final-page');
-        const startBtn = document.getElementById('start-btn');
-        const spinBtn = document.getElementById('spin-btn');
-        const inviteBtn = document.getElementById('invite-btn');
-        const shareBtn = document.getElementById('share-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const learnMoreBtn = document.getElementById('learn-more-btn');
-        const progressBar = document.getElementById('lottery-progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const chanceCount = document.getElementById('chance-count');
-        const friendHelpSection = document.getElementById('friend-help-section');
-        const wheel = document.getElementById('wheel');
-        const rewardPopup = document.getElementById('reward-popup');
-        const rewardAmount = document.getElementById('reward-amount');
-        const rewardNext = document.getElementById('reward-next');
-        const closeRewardBtn = document.getElementById('close-reward-btn');
-        
-        // 初始化转盘
-        function initWheel() {
-            wheel.innerHTML = '';
-            const prizeCount = wheelPrizes.length;
-            const angle = 360 / prizeCount;
-            
-            wheelPrizes.forEach((prize, index) => {
-                const section = document.createElement('div');
-                section.className = 'wheel-section';
-                section.style.transform = `rotate(${angle * index}deg)`;
-                section.style.backgroundColor = prize.color;
-                section.innerHTML = `<span style="transform: rotate(${angle/2}deg);">${prize.text}</span>`;
-                wheel.appendChild(section);
-            });
-        }
-        
-        // 开始按钮点击事件
-        startBtn.addEventListener('click', function() {
-            activityPage.classList.add('hidden');
-            lotteryPage.classList.remove('hidden');
-            initWheel();
+
+        // 页面元素
+        const startPage = document.getElementById('start-page');
+        const gamePage = document.getElementById('game-page');
+        const resultPage = document.getElementById('result-page');
+        const progressBar = document.getElementById('progress-bar');
+        const gameProgress = document.getElementById('game-progress');
+        const currentAmountEl = document.getElementById('current-amount');
+        const gameAmountEl = document.getElementById('game-amount');
+        const chancesEl = document.getElementById('chances');
+        const rewardArea = document.getElementById('reward-area');
+        const rewardEl = document.getElementById('reward');
+        const nextStepEl = document.getElementById('next-step');
+        const inviteArea = document.getElementById('invite-area');
+
+        // 按钮事件
+        document.getElementById('start-btn').addEventListener('click', function() {
+            startPage.classList.add('hidden');
+            gamePage.classList.remove('hidden');
             updateUI();
         });
-        
-        // 抽奖按钮点击事件
-        spinBtn.addEventListener('click', function() {
+
+        document.getElementById('help-btn').addEventListener('click', function() {
             if (chances <= 0) {
-                friendHelpSection.classList.remove('hidden');
-                inviteBtn.classList.remove('btn-disabled');
-                inviteBtn.disabled = false;
+                rewardArea.classList.add('hidden');
+                inviteArea.classList.remove('hidden');
                 return;
             }
             
             chances--;
-            chanceCount.textContent = chances;
+            const reward = getRandomReward();
             
-            // 禁用按钮防止重复点击
-            spinBtn.disabled = true;
-            spinBtn.classList.add('btn-disabled');
-            
-            // 根据当前阶段确定奖励
-            let reward;
-            if (currentAmount < stages[stage].min) {
-                // 随机选择一个转盘奖品
-                const randomIndex = Math.floor(Math.random() * wheelPrizes.length);
-                reward = wheelPrizes[randomIndex].value;
-            } else {
-                // 在当前阶段的奖励中随机选择
-                const currentRewards = stages[stage].rewards;
-                reward = currentRewards[Math.floor(Math.random() * currentRewards.length)];
+            if (stage < stages.length - 1 && currentAmount >= stages[stage].max) {
+                stage++;
             }
             
-            // 旋转转盘动画
-            const spinDuration = 3000; // 3秒
-            const rotations = 5; // 5圈
-            const targetAngle = 360 * rotations + (360 / wheelPrizes.length) * getPrizeIndex(reward);
+            currentAmount = Math.min(currentAmount + reward, stages[stage].max);
+            updateUI();
             
-            wheel.style.transform = `rotate(${targetAngle}deg)`;
+            rewardEl.textContent = reward + (stage > 0 ? "个" + ["金币","碎片","贝壳","珍珠"][stage-1] : "元");
+            nextStepEl.textContent = stages[stage].text;
+            rewardArea.classList.remove('hidden');
             
-            // 动画结束后显示奖励
-            setTimeout(() => {
-                // 更新金额
-                if (stages[stage].unit === "元") {
-                    currentAmount = Math.min(currentAmount + reward, stages[stage].max);
-                }
-                
-                // 显示奖励弹窗
-                rewardAmount.textContent = `${reward}${stages[stage].unit}`;
-                rewardNext.textContent = stages[stage].nextText;
-                rewardPopup.classList.remove('hidden');
-                
-                // 检查是否进入下一阶段
-                if (currentAmount >= stages[stage].max && stage < stages.length - 1) {
-                    stage++;
-                    if (stage === stages.length - 1) {
-                        rewardNext.textContent = "恭喜您集满600元！点击查看真相";
-                    }
-                }
-                
-                updateUI();
-            }, spinDuration);
-        });
-        
-        // 根据奖励值获取奖品索引
-        function getPrizeIndex(reward) {
-            for (let i = 0; i < wheelPrizes.length; i++) {
-                if (wheelPrizes[i].value === reward) {
-                    return i;
-                }
-            }
-            return 0;
-        }
-        
-        // 关闭奖励弹窗
-        closeRewardBtn.addEventListener('click', function() {
-            rewardPopup.classList.add('hidden');
-            spinBtn.disabled = false;
-            spinBtn.classList.remove('btn-disabled');
-            
-            // 检查是否达到最终阶段
             if (currentAmount >= 600) {
-                lotteryPage.classList.add('hidden');
-                finalPage.classList.remove('hidden');
+                setTimeout(function() {
+                    gamePage.classList.add('hidden');
+                    resultPage.classList.remove('hidden');
+                }, 1000);
             }
         });
-        
-        // 邀请好友按钮
-        inviteBtn.addEventListener('click', function() {
-            friendHelpSection.classList.remove('hidden');
-        });
-        
-        // 分享按钮点击事件
-        shareBtn.addEventListener('click', function() {
-            alert("这是模拟页面，实际会要求分享到微信等社交平台");
-            // 模拟获得额外机会
+
+        document.getElementById('invite-btn').addEventListener('click', function() {
             chances += 2;
-            chanceCount.textContent = chances;
-            friendHelpSection.classList.add('hidden');
-            inviteBtn.disabled = true;
-            inviteBtn.classList.add('btn-disabled');
+            inviteArea.classList.add('hidden');
+            updateUI();
         });
-        
-        // 重新开始按钮
-        restartBtn.addEventListener('click', function() {
+
+        document.getElementById('restart-btn').addEventListener('click', function() {
             currentAmount = 0;
             chances = 3;
             stage = 0;
-            friendHelpSection.classList.add('hidden');
-            inviteBtn.disabled = true;
-            inviteBtn.classList.add('btn-disabled');
-            finalPage.classList.add('hidden');
-            lotteryPage.classList.remove('hidden');
-            wheel.style.transform = 'rotate(0deg)';
+            resultPage.classList.add('hidden');
+            gamePage.classList.remove('hidden');
             updateUI();
         });
-        
-        // 了解更多按钮
-        learnMoreBtn.addEventListener('click', function() {
-            alert("这是模拟页面，实际会链接到防骗知识文章");
-        });
-        
-        // 更新UI
-        function updateUI() {
-            const progressPercent = (currentAmount / 600) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-            progressText.textContent = `${currentAmount.toFixed(2)}/600.00元`;
-            chanceCount.textContent = chances;
-        }
-    </script>
-</body>
-</html>
-         }
-        
-        .friend-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-        }
-        
-        .friend-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #bbdefb;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0d47a1;
-            font-weight: bold;
-        }
-        
-        /* 抽奖转盘样式 */
-        .wheel-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-        }
-        
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            border: 8px solid #ff9500;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-        }
-        
-        .wheel-section {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: bottom right;
-            display: flex;
-            align-items: center;
-            box-sizing: border-box;
-            padding-left: 30px;
-        }
-        
-        .wheel-pointer {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 40px solid #ff5e3a;
-            z-index: 10;
-        }
-        
-        .wheel-center {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-        
-        .wheel-center-text {
-            font-weight: bold;
-            color: #ff5e3a;
-        }
-        
-        .reward-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-        
-        .reward-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 80%;
-        }
-        
-        .reward-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #ff5e3a;
-        }
-        
-        .reward-amount {
-            font-size: 36px;
-            font-weight: bold;
-            color: #ff5e3a;
-            margin: 20px 0;
-        }
-        
-        .reward-next {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #666;
-        }
-        
-        .tutorial {
-            background-color: #e8f5e9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- 初始活动页面 -->
-        <div id="activity-page">
-            <div class="header">
-                <h1>恭喜您获得600元现金提现机会！</h1>
-                <p>参与抽奖即可获得现金奖励</p>
-            </div>
-            
-            <div class="warning">
-                <strong>⚠️ 注意：</strong>本页面为模拟拼多多现金提现骗局设计，旨在揭露此类活动的欺骗性质。
-            </div>
-            
-            <p>已有<span id="user-count">1,234,567</span>人成功提现！</p>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress-text">0.00/600.00元</div>
-                </div>
-            </div>
-            
-            <p>参与抽奖，赢取现金奖励，集满600元即可提现！</p>
-            
-            <button class="btn" id="start-btn">立即抽奖</button>
-            
-            <div class="reward-section">
-                <h3>活动规则：</h3>
-                <ul>
-                    <li>新用户可获得3次免费抽奖机会</li>
-                    <li>每次抽奖可获得随机金额奖励</li>
-                    <li>邀请好友助力可获得额外抽奖机会</li>
-                    <li>提现完全免费，无任何隐藏费用</li>
-                </ul>
-            </div>
-            
-            <div class="tutorial">
-                <h3>体验说明：</h3>
-                <p>本模拟将带您完整体验拼多多现金提现活动的全过程，包括：</p>
-                <ol>
-                    <li>初始抽奖获得看似可观的奖励</li>
-                    <li>接近目标时奖励大幅减少</li>
-                    <li>要求邀请好友助力</li>
-                    <li>不断变换奖励单位（金币→碎片→贝壳→珍珠）</li>
-                    <li>最终揭露不可能达到的提现门槛</li>
-                </ol>
-            </div>
-        </div>
-        
-        <!-- 抽奖页面 -->
-        <div id="lottery-page" class="hidden">
-            <div class="header">
-                <h1>幸运大转盘</h1>
-                <p>转动赢取现金奖励</p>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="lottery-progress-bar">
-                    <div class="progress-text" id="progress-text">0.00/600.00元</div>
-                </div>
-            </div>
-            
-            <p>剩余抽奖机会：<span id="chance-count">3</span>次</p>
-            
-            <div class="wheel-container">
-                <div class="wheel-pointer"></div>
-                <div class="wheel" id="wheel">
-                    <!-- 转盘分区将通过JS动态生成 -->
-                </div>
-                <div class="wheel-center">
-                    <div class="wheel-center-text">抽奖</div>
-                </div>
-            </div>
-            
-            <button class="btn" id="spin-btn">立即抽奖</button>
-            <button class="btn btn-disabled" id="invite-btn" disabled>邀请好友获得更多机会</button>
-            
-            <div id="friend-help-section" class="hidden">
-                <h3>邀请好友助力</h3>
-                <div class="friend-help">
-                    <div class="friend-item">
-                        <div class="friend-avatar">张</div>
-                        <div>张三为您助力 +1次抽奖机会</div>
-                    </div>
-                    <div class="friend-item">
-                        <div class="friend-avatar">李</div>
-                        <div>李四为您助力 +1次抽奖机会</div>
-                    </div>
-                </div>
-                
-                <button class="btn" id="share-btn">分享给好友助力</button>
-            </div>
-        </div>
-        
-        <!-- 最终揭露页面 -->
-        <div id="final-page" class="hidden">
-            <div class="header">
-                <h1>恭喜您集满600元！</h1>
-                <p>点击查看提现结果</p>
-            </div>
-            
-            <div class="warning">
-                <h2>⚠️ 提现门槛揭露</h2>
-                <p>系统提示：</p>
-                <p><strong>实际提现需要账户余额达到10,000元</strong></p>
-                <p>这是拼多多现金提现活动的常见骗局：</p>
-                
-                <div class="reward-section">
-                    <h3>骗局全过程回顾：</h3>
-                    <ol>
-                        <li><strong>诱人入口</strong>：展示高额现金奖励吸引参与</li>
-                        <li><strong"快速进展</strong>：初期奖励丰厚，进度快速</li>
-                        <li><strong>难度陡增</strong>：接近目标时奖励大幅减少</li>
-                        <li><strong>社交裂变</strong>：强制要求邀请好友助力</li>
-                        <li><strong>单位变换</strong>：金币→碎片→贝壳→珍珠不断变化</li>
-                        <li><strong>隐藏门槛</strong>：最终设置不可能达到的提现条件</li>
-                    </ol>
-                </div>
-                
-                <div class="reward-section">
-                    <h3>此类活动的真实目的：</h3>
-                    <ul>
-                        <li>获取用户个人信息和社交关系</li>
-                        <li>增加APP活跃度和用户留存</li>
-                        <li>通过广告和诱导消费获利</li>
-                        <li>极少有用户能真正提现成功</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <button class="btn" id="restart-btn">重新体验骗局过程</button>
-            <button class="btn" id="learn-more-btn">了解更多防骗知识</button>
-        </div>
-    </div>
 
-    <!-- 奖励弹窗 -->
-    <div id="reward-popup" class="reward-popup hidden">
-        <div class="reward-content">
-            <div class="reward-title">恭喜您获得</div>
-            <div class="reward-amount" id="reward-amount">0.50元</div>
-            <div class="reward-next" id="reward-next">再抽几次就能提现啦！</div>
-            <button class="btn" id="close-reward-btn">确定</button>
-        </div>
-    </div>
+        // 辅助函数
+        function getRandomReward() {
+            const rewards = stages[stage].rewards;
+            return rewards[Math.floor(Math.random() * rewards.length)];
+        }
 
-    <script>
-        // 当前进度
-        let currentAmount = 0;
-        let chances = 3;
-        let stage = 0;
-        const stages = [
-            { min: 0, max: 59.9, rewards: [5, 3, 2, 1, 0.8, 0.5, 0.3, 0.2], unit: "元", nextText: "继续抽奖，快速累积现金！" },
-            { min: 59.9, max: 59.9, rewards: [10, 8, 5, 3, 1], unit: "金币", nextText: "再集10个金币即可突破59.9元" },
-            { min: 59.9, max: 59.9, rewards: [9, 7, 5, 3, 1], unit: "碎片", nextText: "再集9个碎片即可突破59.9元" },
-            { min: 59.9, max: 59.9, rewards: [5, 4, 3, 2, 1], unit: "贝壳", nextText: "再集5个贝壳即可突破59.9元" },
-            { min: 59.9, max: 59.9, rewards: [20, 15, 10, 5, 1], unit: "珍珠", nextText: "再集20个珍珠即可突破59.9元" },
-            { min: 59.9, max: 600, rewards: [0.1, 0.08, 0.05, 0.03, 0.01], unit: "元", nextText: "恭喜您集满600元！点击查看真相" }
-        ];
-        
-        // 转盘奖品
-        const wheelPrizes = [
-            { text: "5元", value: 5, color: "#FF5252" },
-            { text: "3元", value: 3, color: "#FF4081" },
-            { text: "2元", value: 2, color: "#E040FB" },
-            { text: "1元", value: 1, color: "#7C4DFF" },
-            { text: "0.8元", value: 0.8, color: "#536DFE" },
-            { text: "0.5元", value: 0.5, color: "#448AFF" },
-            { text: "0.3元", value: 0.3, color: "#40C4FF" },
-            { text: "0.2元", value: 0.2, color: "#18FFFF" }
-        ];
-        
-        // DOM元素
-        const activityPage = document.getElementById('activity-page');
-        const lotteryPage = document.getElementById('lottery-page');
-        const finalPage = document.getElementById('final-page');
-        const startBtn = document.getElementById('start-btn');
-        const spinBtn = document.getElementById('spin-btn');
-        const inviteBtn = document.getElementById('invite-btn');
-        const shareBtn = document.getElementById('share-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const learnMoreBtn = document.getElementById('learn-more-btn');
-        const progressBar = document.getElementById('lottery-progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const chanceCount = document.getElementById('chance-count');
-        const friendHelpSection = document.getElementById('friend-help-section');
-        const wheel = document.getElementById('wheel');
-        const rewardPopup = document.getElementById('reward-popup');
-        const rewardAmount = document.getElementById('reward-amount');
-        const rewardNext = document.getElementById('reward-next');
-        const closeRewardBtn = document.getElementById('close-reward-btn');
-        
-        // 初始化转盘
-        function initWheel() {
-            wheel.innerHTML = '';
-            const prizeCount = wheelPrizes.length;
-            const angle = 360 / prizeCount;
-            
-            wheelPrizes.forEach((prize, index) => {
-                const section = document.createElement('div');
-                section.className = 'wheel-section';
-                section.style.transform = `rotate(${angle * index}deg)`;
-                section.style.backgroundColor = prize.color;
-                section.innerHTML = `<span style="transform: rotate(${angle/2}deg);">${prize.text}</span>`;
-                wheel.appendChild(section);
-            });
-        }
-        
-        // 开始按钮点击事件
-        startBtn.addEventListener('click', function() {
-            activityPage.classList.add('hidden');
-            lotteryPage.classList.remove('hidden');
-            initWheel();
-            updateUI();
-        });
-        
-        // 抽奖按钮点击事件
-        spinBtn.addEventListener('click', function() {
-            if (chances <= 0) {
-                friendHelpSection.classList.remove('hidden');
-                inviteBtn.classList.remove('btn-disabled');
-                inviteBtn.disabled = false;
-                return;
-            }
-            
-            chances--;
-            chanceCount.textContent = chances;
-            
-            // 禁用按钮防止重复点击
-            spinBtn.disabled = true;
-            spinBtn.classList.add('btn-disabled');
-            
-            // 根据当前阶段确定奖励
-            let reward;
-            if (currentAmount < stages[stage].min) {
-                // 随机选择一个转盘奖品
-                const randomIndex = Math.floor(Math.random() * wheelPrizes.length);
-                reward = wheelPrizes[randomIndex].value;
-            } else {
-                // 在当前阶段的奖励中随机选择
-                const currentRewards = stages[stage].rewards;
-                reward = currentRewards[Math.floor(Math.random() * currentRewards.length)];
-            }
-            
-            // 旋转转盘动画
-            const spinDuration = 3000; // 3秒
-            const rotations = 5; // 5圈
-            const targetAngle = 360 * rotations + (360 / wheelPrizes.length) * getPrizeIndex(reward);
-            
-            wheel.style.transform = `rotate(${targetAngle}deg)`;
-            
-            // 动画结束后显示奖励
-            setTimeout(() => {
-                // 更新金额
-                if (stages[stage].unit === "元") {
-                    currentAmount = Math.min(currentAmount + reward, stages[stage].max);
-                }
-                
-                // 显示奖励弹窗
-                rewardAmount.textContent = `${reward}${stages[stage].unit}`;
-                rewardNext.textContent = stages[stage].nextText;
-                rewardPopup.classList.remove('hidden');
-                
-                // 检查是否进入下一阶段
-                if (currentAmount >= stages[stage].max && stage < stages.length - 1) {
-                    stage++;
-                    if (stage === stages.length - 1) {
-                        rewardNext.textContent = "恭喜您集满600元！点击查看真相";
-                    }
-                }
-                
-                updateUI();
-            }, spinDuration);
-        });
-        
-        // 根据奖励值获取奖品索引
-        function getPrizeIndex(reward) {
-            for (let i = 0; i < wheelPrizes.length; i++) {
-                if (wheelPrizes[i].value === reward) {
-                    return i;
-                }
-            }
-            return 0;
-        }
-        
-        // 关闭奖励弹窗
-        closeRewardBtn.addEventListener('click', function() {
-            rewardPopup.classList.add('hidden');
-            spinBtn.disabled = false;
-            spinBtn.classList.remove('btn-disabled');
-            
-            // 检查是否达到最终阶段
-            if (currentAmount >= 600) {
-                lotteryPage.classList.add('hidden');
-                finalPage.classList.remove('hidden');
-            }
-        });
-        
-        // 邀请好友按钮
-        inviteBtn.addEventListener('click', function() {
-            friendHelpSection.classList.remove('hidden');
-        });
-        
-        // 分享按钮点击事件
-        shareBtn.addEventListener('click', function() {
-            alert("这是模拟页面，实际会要求分享到微信等社交平台");
-            // 模拟获得额外机会
-            chances += 2;
-            chanceCount.textContent = chances;
-            friendHelpSection.classList.add('hidden');
-            inviteBtn.disabled = true;
-            inviteBtn.classList.add('btn-disabled');
-        });
-        
-        // 重新开始按钮
-        restartBtn.addEventListener('click', function() {
-            currentAmount = 0;
-            chances = 3;
-            stage = 0;
-            friendHelpSection.classList.add('hidden');
-            inviteBtn.disabled = true;
-            inviteBtn.classList.add('btn-disabled');
-            finalPage.classList.add('hidden');
-            lotteryPage.classList.remove('hidden');
-            wheel.style.transform = 'rotate(0deg)';
-            updateUI();
-        });
-        
-        // 了解更多按钮
-        learnMoreBtn.addEventListener('click', function() {
-            alert("这是模拟页面，实际会链接到防骗知识文章");
-        });
-        
-        // 更新UI
         function updateUI() {
-            const progressPercent = (currentAmount / 600) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-            progressText.textContent = `${currentAmount.toFixed(2)}/600.00元`;
-            chanceCount.textContent = chances;
+            const percent = (currentAmount / 600) * 100;
+            progressBar.style.width = percent + '%';
+            gameProgress.style.width = percent + '%';
+            currentAmountEl.textContent = currentAmount.toFixed(2);
+            gameAmountEl.textContent = currentAmount.toFixed(2);
+            chancesEl.textContent = chances;
         }
     </script>
 </body>
