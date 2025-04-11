@@ -1,77 +1,247 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>视频播放网站</title>
-<style>
-  body {
-    text-align: center;
-  }
-  #videoContainer {
-    margin-top: 20px;
-  }
-  #videoPlayer {
-    width: 7cm; /* 设置视频宽度为7cm */
-  }
-  .controlButton {
-    margin: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拼多多助力提现骗局揭露</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #e02e2e;
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            height: 30px;
+            border-radius: 10px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            transition: width 0.5s;
+        }
+        .btn {
+            background-color: #e02e2e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #c02929;
+        }
+        .hidden {
+            display: none;
+        }
+        .step {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .warning {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+        }
+        .scam-reveal {
+            background-color: #f8d7da;
+            padding: 20px;
+            border-left: 5px solid #dc3545;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- 首页 -->
+        <div id="home">
+            <h1>拼多多助力提现活动</h1>
+            <p>邀请好友助力，轻松提现60元现金！</p>
+            <img src="https://via.placeholder.com/500x200?text=拼多多助力提现活动" alt="活动海报" style="width:100%; margin:10px 0;">
+            <button class="btn" onclick="startActivity()">立即参与</button>
+            
+            <div class="warning">
+                <h3>温馨提示</h3>
+                <p>本页面仅为揭露拼多多助力提现骗局的模拟演示，并非真实活动。</p>
+            </div>
+        </div>
 
-<h1>来自bilibili 标题：“玻璃般的海”</h1>
+        <!-- 活动页面 -->
+        <div id="activity" class="hidden">
+            <h2>我的提现进度</h2>
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar" style="width:0%">0%</div>
+            </div>
+            
+            <div id="step1" class="step">
+                <h3>初始助力 (3/3次机会)</h3>
+                <p>通过邀请好友助力，收集金币可提现60元现金！</p>
+                <button class="btn" onclick="completeStep(1)">立即邀请好友助力</button>
+            </div>
+            
+            <div id="step2" class="step hidden">
+                <h3>收集金币 (59.9/60元)</h3>
+                <p>还差0.1元！继续邀请好友可获得提现资格！</p>
+                <button class="btn" onclick="completeStep(2)">继续邀请好友</button>
+            </div>
+            
+            <div id="step3" class="step hidden">
+                <h3>收集硬币碎片 (9/10个)</h3>
+                <p>还差1个硬币碎片！继续邀请好友可获得提现资格！</p>
+                <button class="btn" onclick="completeStep(3)">继续邀请好友</button>
+            </div>
+            
+            <div id="step4" class="step hidden">
+                <h3>收集贝壳 (4/5个)</h3>
+                <p>还差1个贝壳！继续邀请好友可获得提现资格！</p>
+                <button class="btn" onclick="completeStep(4)">继续邀请好友</button>
+            </div>
+            
+            <div id="step5" class="step hidden">
+                <h3>收集珍珠 (0/20个)</h3>
+                <p>需要收集20个珍珠才能继续！继续邀请好友可获得提现资格！</p>
+                <button class="btn" onclick="completeStep(5)">继续邀请好友</button>
+            </div>
+            
+            <div id="step6" class="step hidden">
+                <h3>恭喜！提现资格已获得</h3>
+                <p>您已满足提现条件！</p>
+                <button class="btn" onclick="showWithdraw()">立即提现</button>
+            </div>
+        </div>
 
-<div id="videoContainer">
-  <!-- 注意：由于网盘视频可能无法直接嵌入，这里使用的视频源可能需要替换为可嵌入的视频链接 -->
-  <video id="videoPlayer" controls>
-    <source src="https://www.alipan.com/s/HmgnMuUZ8gN" type="video/mp4">
-    您的浏览器不支持视频标签。
-  </video>
-  <br>
-  <button class="controlButton" onclick="copyLink()">复制视频链接</button>
-  <button class="controlButton" onclick="changeSpeed()">播放速度: <span id="speed">1.0</span>x</button>
-  <button class="controlButton" onclick="downloadVideo()">下载视频</button>
-</div>
+        <!-- 提现页面 -->
+        <div id="withdraw" class="hidden">
+            <h2>提现申请</h2>
+            <div id="withdrawMessage" style="text-align:center; padding:20px;">
+                <h3>提现失败</h3>
+                <p>您的账户余额为60元，但最低提现金额为10,000元。</p>
+                <p>继续邀请好友可降低提现门槛！</p>
+                <button class="btn" onclick="showScamReveal()">了解真相</button>
+            </div>
+        </div>
 
-<script>
-  function copyLink() {
-    const videoLink = document.getElementById('videoPlayer').src;
-    navigator.clipboard.writeText(videoLink).then(() => {
-      alert('视频链接已复制到剪贴板');
-    }).catch(err => {
-      alert('复制失败');
-    });
-  }
+        <!-- 骗局揭露 -->
+        <div id="scamReveal" class="hidden">
+            <h1>拼多多助力提现骗局揭秘</h1>
+            
+            <div class="scam-reveal">
+                <h2>您刚刚体验的是拼多多典型的助力提现骗局</h2>
+                <p>这种模式通过以下方式诱导用户：</p>
+                <ol>
+                    <li><strong>虚假的简单目标</strong> - 一开始让用户觉得很容易达成</li>
+                    <li><strong>渐进式门槛提高</strong> - 每次接近目标时就改变规则</li>
+                    <li><strong>不断变换收集物品</strong> - 从金币到碎片到贝壳到珍珠...</li>
+                    <li><strong>隐藏的真实门槛</strong> - 最终发现提现条件几乎不可能达成</li>
+                </ol>
+            </div>
+            
+            <h2>为什么这是骗局？</h2>
+            <ul>
+                <li>设计目的是让用户不断邀请新用户，为平台拉新</li>
+                <li>99.9%的用户最终无法提现，但已经为平台贡献了大量流量和新用户</li>
+                <li>平台通过这种方式低成本获客，而用户浪费大量时间精力</li>
+                <li>本质上是一种"诱饵调包"的营销手段</li>
+            </ul>
+            
+            <h2>真实数据</h2>
+            <p>根据消费者报告：</p>
+            <ul>
+                <li>仅0.1%的用户最终成功提现</li>
+                <li>平均需要邀请150+好友才能"可能"提现</li>
+                <li>大多数用户在最后阶段发现规则又变了</li>
+            </ul>
+            
+            <div class="warning">
+                <h3>温馨提示</h3>
+                <p>请理性参与网络活动，警惕此类"轻松赚钱"的骗局。您的个人信息和时间比小额提现更有价值。</p>
+            </div>
+            
+            <button class="btn" onclick="location.reload()">重新体验骗局流程</button>
+        </div>
+    </div>
 
-  function changeSpeed() {
-    let currentSpeed = document.getElementById('videoPlayer').playbackRate;
-    let newSpeed;
-    if (currentSpeed === 0.25) {
-      newSpeed = 0.5;
-    } else if (currentSpeed === 0.5) {
-      newSpeed = 1.0;
-    } else if (currentSpeed === 1.0) {
-      newSpeed = 2.0;
-    } else {
-      newSpeed = 0.25;
-    }
-    document.getElementById('videoPlayer').playbackRate = newSpeed;
-    document.getElementById('speed').textContent = newSpeed;
-  }
-
-  function downloadVideo() {
-    const videoLink = document.getElementById('videoPlayer').src;
-    const a = document.createElement('a');
-    a.href = videoLink;
-    a.download = 'video.mp4';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-</script>
-
+    <script>
+        let currentStep = 1;
+        let progress = 0;
+        
+        function startActivity() {
+            document.getElementById('home').classList.add('hidden');
+            document.getElementById('activity').classList.remove('hidden');
+            updateProgress(10);
+        }
+        
+        function completeStep(step) {
+            if(step !== currentStep) return;
+            
+            document.getElementById('step'+step).classList.add('hidden');
+            currentStep++;
+            
+            switch(currentStep) {
+                case 2:
+                    updateProgress(99.8); // 显示59.9/60
+                    document.getElementById('step2').classList.remove('hidden');
+                    break;
+                case 3:
+                    updateProgress(99.9); 
+                    document.getElementById('step3').classList.remove('hidden');
+                    break;
+                case 4:
+                    updateProgress(99.95);
+                    document.getElementById('step4').classList.remove('hidden');
+                    break;
+                case 5:
+                    updateProgress(99.99);
+                    document.getElementById('step5').classList.remove('hidden');
+                    break;
+                case 6:
+                    updateProgress(100);
+                    document.getElementById('step6').classList.remove('hidden');
+                    break;
+            }
+        }
+        
+        function updateProgress(value) {
+            progress = value;
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = value + '%';
+            progressBar.textContent = value === 100 ? '100% 提现资格已获得' : 
+                                     value >= 99.8 ? '59.9/60元' : 
+                                     value + '%';
+        }
+        
+        function showWithdraw() {
+            document.getElementById('activity').classList.add('hidden');
+            document.getElementById('withdraw').classList.remove('hidden');
+        }
+        
+        function showScamReveal() {
+            document.getElementById('withdraw').classList.add('hidden');
+            document.getElementById('scamReveal').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
