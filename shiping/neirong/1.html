@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>助力抽奖模拟</title>
+    <title>抽奖骗局模拟</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; }
         .panel { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -19,7 +19,7 @@
     <div id="start-page" class="panel">
         <div class="header">
             <h2>恭喜获得600元提现机会！</h2>
-            <p>已有5,148,877人成功提现</p>
+            <p>已有1,234,567人成功提现</p>
         </div>
         <div class="progress">
             <div class="progress-bar" id="progress-bar"></div>
@@ -30,7 +30,7 @@
 
     <div id="game-page" class="panel hidden">
         <div class="header">
-            <h2>抽奖</h2>
+            <h2>助力抽奖</h2>
             <p>剩余机会：<span id="chances">3</span>次</p>
         </div>
         <div class="progress">
@@ -61,7 +61,7 @@
             <p>这是典型的抽奖骗局：</p>
             <ul>
                 <li>初期奖励丰厚吸引参与</li>
-                <li>接近目标时难度陡增</li>
+                <li>接近目标时奖励大幅减少</li>
                 <li>强制邀请好友助力</li>
                 <li>最终设置不可能达到的门槛</li>
             </ul>
@@ -73,15 +73,41 @@
         // 游戏数据
         let currentAmount = 0;
         let chances = 3;
-        let stage = 0;
-        const stages = [
-            { max: 59.9, rewards: [5, 3, 2, 1, 0.8, 0.5], text: "继续助力可快速提现！" },
-            { max: 59.9, rewards: [10, 8, 5, 3], text: "需要收集10个金币" },
-            { max: 59.9, rewards: [9, 7, 5], text: "需要收集9个碎片" },
-            { max: 59.9, rewards: [5, 4, 3], text: "需要收集5个贝壳" },
-            { max: 600, rewards: [0.1, 0.08, 0.05], text: "即将提现！" }
-        ];
-
+        
+        // 根据当前进度获取奖励
+        function getReward() {
+            if (currentAmount < 30) {
+                // 0-30元阶段：大额奖励概率高
+                return getRandomReward([5, 3, 2, 1, 0.8, 0.5], [30, 25, 20, 15, 5, 5]);
+            } else if (currentAmount < 100) {
+                // 30-100元阶段：中等奖励
+                return getRandomReward([2, 1, 0.8, 0.5, 0.3, 0.2], [15, 20, 20, 20, 15, 10]);
+            } else if (currentAmount < 300) {
+                // 100-300元阶段：小额奖励
+                return getRandomReward([1, 0.8, 0.5, 0.3, 0.2, 0.1], [10, 15, 20, 25, 20, 10]);
+            } else if (currentAmount < 500) {
+                // 300-500元阶段：微小奖励
+                return getRandomReward([0.5, 0.3, 0.2, 0.1, 0.08, 0.05], [5, 10, 15, 30, 25, 15]);
+            } else {
+                // 500-600元阶段：几乎不可能完成
+                return getRandomReward([0.1, 0.08, 0.05, 0.03, 0.02, 0.01], [5, 5, 10, 30, 30, 20]);
+            }
+        }
+        
+        // 根据权重随机获取奖励
+        function getRandomReward(values, weights) {
+            let total = weights.reduce((a, b) => a + b, 0);
+            let random = Math.random() * total;
+            let sum = 0;
+            
+            for (let i = 0; i < values.length; i++) {
+                sum += weights[i];
+                if (random <= sum) return values[i];
+            }
+            
+            return values[0];
+        }
+        
         // 页面元素
         const startPage = document.getElementById('start-page');
         const gamePage = document.getElementById('game-page');
@@ -111,17 +137,26 @@
             }
             
             chances--;
-            const reward = getRandomReward();
+            const reward = getReward();
             
-            if (stage < stages.length - 1 && currentAmount >= stages[stage].max) {
-                stage++;
-            }
-            
-            currentAmount = Math.min(currentAmount + reward, stages[stage].max);
+            currentAmount = Math.min(currentAmount + reward, 600);
             updateUI();
             
-            rewardEl.textContent = reward + (stage > 0 ? "个" + ["金币","碎片","贝壳","珍珠"][stage-1] : "元");
-            nextStepEl.textContent = stages[stage].text;
+            rewardEl.textContent = reward + "元";
+            
+            // 根据进度设置提示语
+            if (currentAmount < 30) {
+                nextStepEl.textContent = "继续助力可快速提现！";
+            } else if (currentAmount < 100) {
+                nextStepEl.textContent = "再邀请几位好友就能提现了！";
+            } else if (currentAmount < 300) {
+                nextStepEl.textContent = "只差一点点了，坚持就是胜利！";
+            } else if (currentAmount < 500) {
+                nextStepEl.textContent = "即将成功，不要放弃！";
+            } else {
+                nextStepEl.textContent = "还差最后一点点！";
+            }
+            
             rewardArea.classList.remove('hidden');
             
             if (currentAmount >= 600) {
@@ -141,18 +176,12 @@
         document.getElementById('restart-btn').addEventListener('click', function() {
             currentAmount = 0;
             chances = 3;
-            stage = 0;
             resultPage.classList.add('hidden');
             gamePage.classList.remove('hidden');
             updateUI();
         });
 
-        // 辅助函数
-        function getRandomReward() {
-            const rewards = stages[stage].rewards;
-            return rewards[Math.floor(Math.random() * rewards.length)];
-        }
-
+        // 更新UI
         function updateUI() {
             const percent = (currentAmount / 600) * 100;
             progressBar.style.width = percent + '%';
