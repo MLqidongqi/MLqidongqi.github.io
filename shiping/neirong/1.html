@@ -27,6 +27,7 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             width: 100%;
+            position: relative;
         }
         .header {
             text-align: center;
@@ -81,6 +82,10 @@
             transform: scale(0.98);
             opacity: 0.9;
         }
+        .btn-secondary {
+            background: linear-gradient(135deg, #3498db, #5dade2);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
         .btn-disabled {
             background: #cccccc;
             box-shadow: none;
@@ -123,13 +128,25 @@
         li {
             margin-bottom: 8px;
         }
+        .skip-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #3498db;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div id="start-page" class="panel">
+        <button id="skip-to-end" class="skip-btn">跳过直接看结果</button>
         <div class="header">
             <h2>恭喜获得200元提现机会！</h2>
-            <p>已有11,451,454,188人成功提现</p>
+            <p>已有27,114,514人成功提现</p>
         </div>
         
         <div class="progress">
@@ -148,6 +165,7 @@
     </div>
 
     <div id="game-page" class="panel hidden">
+        <button id="skip-to-end-game" class="skip-btn">跳过直接看结果</button>
         <div class="header">
             <h2>抽奖</h2>
             <p>剩余机会：<span id="chances">3</span>次</p>
@@ -161,7 +179,7 @@
         
         <p style="text-align: center; font-size: 15px;">当前进度：<span id="game-amount">0.00</span>/200.00元</p>
         
-        <button id="help-btn" class="btn">立即助力</button>
+        <button id="help-btn" class="btn">立即抽奖</button>
         
         <div id="reward-area" class="reward hidden">
             <p>获得奖励：<strong id="reward">0.5元</strong></p>
@@ -174,7 +192,7 @@
         </div>
     </div>
 
-    <div id="result-page" class="panel hidden">
+    <div id="result-page" class="panel">
         <div class="header">
             <h2>提现失败！</h2>
         </div>
@@ -191,6 +209,7 @@
         </div>
         
         <button id="restart-btn" class="btn">重新体验</button>
+        <button id="learn-more-btn" class="btn btn-secondary">了解更多防骗知识</button>
     </div>
 
     <script>
@@ -245,14 +264,33 @@
         const nextStepEl = document.getElementById('next-step');
         const inviteArea = document.getElementById('invite-area');
         const progressText = document.getElementById('progress-text');
+        const skipToEndBtn = document.getElementById('skip-to-end');
+        const skipToEndGameBtn = document.getElementById('skip-to-end-game');
+        const learnMoreBtn = document.getElementById('learn-more-btn');
 
-        // 按钮事件
+        // 初始化隐藏结果页
+        resultPage.classList.add('hidden');
+
+        // 跳过按钮事件
+        skipToEndBtn.addEventListener('click', function() {
+            startPage.classList.add('hidden');
+            gamePage.classList.add('hidden');
+            resultPage.classList.remove('hidden');
+        });
+
+        skipToEndGameBtn.addEventListener('click', function() {
+            gamePage.classList.add('hidden');
+            resultPage.classList.remove('hidden');
+        });
+
+        // 开始按钮点击事件
         document.getElementById('start-btn').addEventListener('click', function() {
             startPage.classList.add('hidden');
             gamePage.classList.remove('hidden');
             updateUI();
         });
 
+        // 助力按钮点击事件
         document.getElementById('help-btn').addEventListener('click', function() {
             if (chances <= 0) {
                 rewardArea.classList.add('hidden');
@@ -289,18 +327,25 @@
             }
         });
 
+        // 邀请按钮点击事件
         document.getElementById('invite-btn').addEventListener('click', function() {
             chances += 2;
             inviteArea.classList.add('hidden');
             updateUI();
         });
 
+        // 重新开始按钮
         document.getElementById('restart-btn').addEventListener('click', function() {
             currentAmount = 0;
             chances = 3;
             resultPage.classList.add('hidden');
             gamePage.classList.remove('hidden');
             updateUI();
+        });
+
+        // 了解更多按钮
+        learnMoreBtn.addEventListener('click', function() {
+            alert("这是模拟页面，实际会链接到防骗知识文章");
         });
 
         // 更新UI
