@@ -3,50 +3,172 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>抽奖骗局模拟</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; }
-        .panel { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .header { text-align: center; color: #e74c3c; margin-bottom: 20px; }
-        .progress { height: 30px; background: #f1f1f1; border-radius: 15px; margin: 20px 0; }
-        .progress-bar { height: 100%; border-radius: 15px; background: #e74c3c; width: 0%; transition: width 0.5s; }
-        .btn { display: block; width: 100%; padding: 12px; background: #e74c3c; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
-        .reward { margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; }
-        .hidden { display: none; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.5;
+            padding: 10px;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        .panel {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        .header h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .progress {
+            height: 25px;
+            background: #f1f1f1;
+            border-radius: 12px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #e74c3c, #ff6b6b);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0,0,0,0.3);
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #e74c3c, #ff6b6b);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+        .btn-disabled {
+            background: #cccccc;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        .reward {
+            margin: 12px 0;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .reward strong {
+            color: #e74c3c;
+            font-size: 18px;
+        }
+        .hidden {
+            display: none;
+        }
+        .invite-friends {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .invite-friends p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .warning {
+            background-color: #fff8e1;
+            padding: 12px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        li {
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
     <div id="start-page" class="panel">
         <div class="header">
-            <h2>恭喜获得600元提现机会！</h2>
-            <p>已有1,234,567人成功提现</p>
+            <h2>恭喜获得200元提现机会！</h2>
+            <p>已有11,451,454,188人成功提现</p>
         </div>
+        
         <div class="progress">
-            <div class="progress-bar" id="progress-bar"></div>
+            <div class="progress-bar" id="progress-bar">
+                <div class="progress-text">0.00/200.00元</div>
+            </div>
         </div>
-        <p>当前进度：<span id="current-amount">0.00</span>/600.00元</p>
+        
+        <p style="text-align: center; font-size: 15px;">当前进度：<span id="current-amount">0.00</span>/200.00元</p>
+        
         <button id="start-btn" class="btn">立即参与</button>
+        
+        <div class="warning">
+            <strong>⚠️ 注意：</strong>本页面为模拟抽奖骗局设计，旨在揭露此类活动的欺骗性质。
+        </div>
     </div>
 
     <div id="game-page" class="panel hidden">
         <div class="header">
-            <h2>助力抽奖</h2>
+            <h2>抽奖</h2>
             <p>剩余机会：<span id="chances">3</span>次</p>
         </div>
-        <div class="progress">
-            <div class="progress-bar" id="game-progress"></div>
-        </div>
-        <p>当前进度：<span id="game-amount">0.00</span>/600.00元</p>
-        <button id="help-btn" class="btn">立即助力</button>
         
-        <div id="reward-area" class="hidden">
-            <div class="reward">
-                <p>获得奖励：<span id="reward">0.5元</span></p>
-                <p id="next-step">继续助力可快速提现！</p>
+        <div class="progress">
+            <div class="progress-bar" id="game-progress">
+                <div class="progress-text" id="progress-text">0.00/200.00元</div>
             </div>
         </div>
         
-        <div id="invite-area" class="hidden">
+        <p style="text-align: center; font-size: 15px;">当前进度：<span id="game-amount">0.00</span>/200.00元</p>
+        
+        <button id="help-btn" class="btn">立即助力</button>
+        
+        <div id="reward-area" class="reward hidden">
+            <p>获得奖励：<strong id="reward">0.5元</strong></p>
+            <p id="next-step">继续助力可快速提现！</p>
+        </div>
+        
+        <div id="invite-area" class="invite-friends hidden">
             <p>机会已用完，邀请好友获得更多助力机会</p>
             <button id="invite-btn" class="btn">邀请好友</button>
         </div>
@@ -56,8 +178,9 @@
         <div class="header">
             <h2>提现失败！</h2>
         </div>
+        
         <div class="reward">
-            <p>您已集满600元，但实际提现需要10,000元</p>
+            <p>您已集满200元，但实际提现需要1,000元</p>
             <p>这是典型的抽奖骗局：</p>
             <ul>
                 <li>初期奖励丰厚吸引参与</li>
@@ -66,6 +189,7 @@
                 <li>最终设置不可能达到的门槛</li>
             </ul>
         </div>
+        
         <button id="restart-btn" class="btn">重新体验</button>
     </div>
 
@@ -73,24 +197,23 @@
         // 游戏数据
         let currentAmount = 0;
         let chances = 3;
+        const maxAmount = 200;
+        const realWithdrawLimit = 1000;
         
         // 根据当前进度获取奖励
         function getReward() {
             if (currentAmount < 30) {
                 // 0-30元阶段：大额奖励概率高
-                return getRandomReward([5, 3, 2, 1, 0.8, 0.5], [30, 25, 20, 15, 5, 5]);
-            } else if (currentAmount < 100) {
-                // 30-100元阶段：中等奖励
-                return getRandomReward([2, 1, 0.8, 0.5, 0.3, 0.2], [15, 20, 20, 20, 15, 10]);
-            } else if (currentAmount < 300) {
-                // 100-300元阶段：小额奖励
-                return getRandomReward([1, 0.8, 0.5, 0.3, 0.2, 0.1], [10, 15, 20, 25, 20, 10]);
-            } else if (currentAmount < 500) {
-                // 300-500元阶段：微小奖励
-                return getRandomReward([0.5, 0.3, 0.2, 0.1, 0.08, 0.05], [5, 10, 15, 30, 25, 15]);
+                return getRandomReward([20, 10, 5, 3, 2, 1], [10, 15, 25, 25, 15, 10]);
+            } else if (currentAmount < 80) {
+                // 30-80元阶段：中等奖励
+                return getRandomReward([5, 3, 2, 1, 0.8, 0.5], [10, 15, 20, 25, 20, 10]);
+            } else if (currentAmount < 150) {
+                // 80-150元阶段：小额奖励
+                return getRandomReward([2, 1, 0.8, 0.5, 0.3, 0.2], [5, 10, 15, 30, 25, 15]);
             } else {
-                // 500-600元阶段：几乎不可能完成
-                return getRandomReward([0.1, 0.08, 0.05, 0.03, 0.02, 0.01], [5, 5, 10, 30, 30, 20]);
+                // 150-200元阶段：几乎只有几分钱
+                return getRandomReward([0.5, 0.3, 0.2, 0.1, 0.08, 0.05], [5, 5, 10, 30, 30, 20]);
             }
         }
         
@@ -121,6 +244,7 @@
         const rewardEl = document.getElementById('reward');
         const nextStepEl = document.getElementById('next-step');
         const inviteArea = document.getElementById('invite-area');
+        const progressText = document.getElementById('progress-text');
 
         // 按钮事件
         document.getElementById('start-btn').addEventListener('click', function() {
@@ -139,7 +263,7 @@
             chances--;
             const reward = getReward();
             
-            currentAmount = Math.min(currentAmount + reward, 600);
+            currentAmount = Math.min(currentAmount + reward, maxAmount);
             updateUI();
             
             rewardEl.textContent = reward + "元";
@@ -147,19 +271,17 @@
             // 根据进度设置提示语
             if (currentAmount < 30) {
                 nextStepEl.textContent = "继续助力可快速提现！";
-            } else if (currentAmount < 100) {
+            } else if (currentAmount < 80) {
                 nextStepEl.textContent = "再邀请几位好友就能提现了！";
-            } else if (currentAmount < 300) {
+            } else if (currentAmount < 150) {
                 nextStepEl.textContent = "只差一点点了，坚持就是胜利！";
-            } else if (currentAmount < 500) {
-                nextStepEl.textContent = "即将成功，不要放弃！";
             } else {
                 nextStepEl.textContent = "还差最后一点点！";
             }
             
             rewardArea.classList.remove('hidden');
             
-            if (currentAmount >= 600) {
+            if (currentAmount >= maxAmount) {
                 setTimeout(function() {
                     gamePage.classList.add('hidden');
                     resultPage.classList.remove('hidden');
@@ -183,11 +305,12 @@
 
         // 更新UI
         function updateUI() {
-            const percent = (currentAmount / 600) * 100;
+            const percent = (currentAmount / maxAmount) * 100;
             progressBar.style.width = percent + '%';
             gameProgress.style.width = percent + '%';
             currentAmountEl.textContent = currentAmount.toFixed(2);
             gameAmountEl.textContent = currentAmount.toFixed(2);
+            progressText.textContent = currentAmount.toFixed(2) + '/' + maxAmount.toFixed(2) + '元';
             chancesEl.textContent = chances;
         }
     </script>
