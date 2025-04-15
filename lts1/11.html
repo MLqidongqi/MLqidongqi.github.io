@@ -2,119 +2,167 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>🍭 崔紫睿の超持久聊天室</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 5.1班手机地下城</title>
     <style>
         body {
-            background-color: #FFF2CC;
             font-family: "Comic Sans MS", cursive;
+            background: #FFECF5;
+            margin: 0;
+            padding: 10px;
         }
         #chat-box {
-            height: 300px;
-            border: 3px dotted #FF99CC;
+            height: 60vh;
+            border: 3px wavy #FF99CC;
             overflow-y: scroll;
             padding: 10px;
-            background-color: white;
+            background: white;
             margin-bottom: 10px;
+            border-radius: 15px;
+        }
+        .msg {
+            margin: 5px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .self {
+            background: #DCF8C6;
+            margin-left: auto;
+        }
+        .other {
+            background: #ECECEC;
+        }
+        #input-area {
+            display: flex;
+            gap: 5px;
+        }
+        #message {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #66CCFF;
+            border-radius: 20px;
+        }
+        button {
+            background: #FF9966;
+            border: none;
+            padding: 0 15px;
+            border-radius: 20px;
+            color: white;
         }
         .warning {
             color: #FF3333;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px pink;
-        }
-        #message {
-            width: 70%;
-            padding: 5px;
-            border: 2px solid #66CCFF;
-        }
-        button {
-            background-color: #FF9966;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 10px;
-            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 5px;
         }
     </style>
+    
+    <!-- Firebase 魔法代码 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // 你的Firebase配置（自己申请免费的！）
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
 </head>
 <body>
-    <h1>🏰 5.1班永久回忆城堡 🏰</h1>
+    <h2 style="text-align:center;">🍬 5.1班辣条通讯社</h2>
     
     <div id="chat-box"></div>
     
-    <input type="text" id="message" placeholder="小心！说'作业'会触发警报！">
-    <button onclick="sendMessage()">发射消息！</button>
-    <button onclick="clearChat()" style="background-color:#FF6666;">毁灭证据</button>
+    <div id="input-area">
+        <input type="text" id="message" placeholder="说点劲爆的！">
+        <button onclick="sendMessage()">💥</button>
+    </div>
     
-    <p class="warning">⚠️ 自动存档中...关掉网页也不会丢记录！（除非你点那个红按钮）</p>
+    <p class="warning">⚠️ 长按消息可以删除（仅限自己发的）</p>
     
     <script>
-        // 从本地存储加载聊天记录
-        if(localStorage.getItem('chatHistory')) {
-            document.getElementById('chat-box').innerHTML = localStorage.getItem('chatHistory');
+        const db = firebase.database();
+        const chatRef = db.ref('chats');
+        let username = "匿名"+Math.floor(Math.random()*1000);
+        
+        // 加载历史消息
+        chatRef.limitToLast(50).on('child_added', (snapshot) => {
+            const data = snapshot.val();
+            addMessage(data.text, data.sender, snapshot.key);
+        });
+        
+        // 发消息
+        function sendMessage() {
+            const msg = document.getElementById("message").value.trim();
+            if(msg) {
+                chatRef.push({
+                    text: filterMessage(msg),
+                    sender: username,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+                document.getElementById("message").value = "";
+            }
         }
         
-        const badWords = ["作业", "告老师", "谈恋爱", "数学"];
-        const punishments = [
-            "播放《英语听力真题》",
-            "发送熊猫头表情包🐼",
-            "强制循环播放《少先队队歌》",
-            "开启九九乘法表洗脑模式"
-        ];
-        
-        function sendMessage() {
-            let msg = document.getElementById("message").value;
-            let chatBox = document.getElementById("chat-box");
-            let currentTime = new Date().toLocaleTimeString();
-            
-            // 违禁词检测
-            let triggered = false;
-            for(let i=0; i<badWords.length; i++) {
-                if(msg.includes(badWords[i])) {
-                    chatBox.innerHTML += `<p>🚨 系统：检测到「${badWords[i]}」！惩罚：${punishments[i]}</p>`;
-                    triggered = true;
-                    
-                    // 特殊惩罚
-                    if(badWords[i] === "数学") {
-                        chatBox.innerHTML += `<p>📢 系统：<marquee>${generateMathTable()}</marquee></p>`;
-                    }
+        // 过滤违禁词
+        function filterMessage(msg) {
+            const badWords = ["作业", "告老师", "数学"];
+            badWords.forEach(word => {
+                if(msg.includes(word)) {
+                    msg = msg.replace(word, "🐶".repeat(word.length));
+                    alert(`检测到危险词「${word}」！已自动狗化！`);
                 }
+            });
+            return msg;
+        }
+        
+        // 显示消息
+        function addMessage(msg, sender, msgId) {
+            const chatBox = document.getElementById("chat-box");
+            const msgDiv = document.createElement("div");
+            
+            msgDiv.className = sender === username ? "msg self" : "msg other";
+            msgDiv.textContent = msg;
+            
+            // 长按删除
+            if(sender === username) {
+                msgDiv.addEventListener('longpress', () => {
+                    if(confirm("要毁灭这条犯罪证据吗？")) {
+                        db.ref('chats/'+msgId).remove();
+                    }
+                });
             }
             
-            if(!triggered && msg.trim() !== "") {
-                chatBox.innerHTML += `<p>👧 崔紫睿 (${currentTime})：${msg}</p>`;
-            }
-            
-            // 保存到本地存储
-            localStorage.setItem('chatHistory', chatBox.innerHTML);
-            document.getElementById("message").value = "";
+            chatBox.appendChild(msgDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
         
-        function clearChat() {
-            if(confirm("确定要毁灭所有犯罪证据吗？")) {
-                localStorage.removeItem('chatHistory');
-                document.getElementById('chat-box').innerHTML = '<p>💥 系统：崔紫睿销毁了所有聊天记录！</p>';
+        // 长按检测
+        let timer;
+        document.addEventListener('touchstart', (e) => {
+            if(e.target.className.includes('self')) {
+                timer = setTimeout(() => {
+                    e.target.style.backgroundColor = "#FF9999";
+                    if(confirm("要删除这条消息吗？")) {
+                        const msgId = e.target.dataset.id;
+                        db.ref('chats/'+msgId).remove();
+                    }
+                }, 1000);
             }
-        }
+        }, {passive: true});
         
-        function generateMathTable() {
-            let table = "";
-            for(let i=1; i<=3; i++) {
-                for(let j=1; j<=9; j++) {
-                    table += `${i}×${j}=${i*j} `;
-                }
-                table += " | ";
-            }
-            return table;
-        }
+        document.addEventListener('touchend', () => clearTimeout(timer));
         
-        // 自动欢迎消息
-        window.onload = function() {
-            if(!localStorage.getItem('firstVisit')) {
-                document.getElementById('chat-box').innerHTML += 
-                    '<p>🌟 系统：欢迎来到5.1班秘密基地！发"辣条"有惊喜！</p>';
-                localStorage.setItem('firstVisit', 'true');
-            }
-        };
+        // 设置用户名
+        username = prompt("给自己取个代号！", username) || username;
     </script>
 </body>
 </html>
