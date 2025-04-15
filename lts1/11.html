@@ -2,52 +2,119 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>和死宅酱の秘密基地</title>
+    <title>🍭 崔紫睿の超持久聊天室</title>
     <style>
-        body { background: pink url('mc_grass.png'); font-family: "Comic Sans MS", cursive; }
-        #chatbox { height: 300px; overflow-y: scroll; border: 3px dashed #ff69b4; }
-        /* 警告：以下CSS由直男审美编写 */
+        body {
+            background-color: #FFF2CC;
+            font-family: "Comic Sans MS", cursive;
+        }
+        #chat-box {
+            height: 300px;
+            border: 3px dotted #FF99CC;
+            overflow-y: scroll;
+            padding: 10px;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+        .warning {
+            color: #FF3333;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px pink;
+        }
+        #message {
+            width: 70%;
+            padding: 5px;
+            border: 2px solid #66CCFF;
+        }
+        button {
+            background-color: #FF9966;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <h1>❤️小依然酱专属死宅聊天室❤️</h1>
-    <div id="chatbox"></div>
-    <input type="text" id="message" placeholder="说点沙雕的...">
-    <button onclick="sendMessage()">发送！(๑•̀ㅂ•́)و✧</button>
-
+    <h1>🏰 5.1班永久回忆城堡 🏰</h1>
+    
+    <div id="chat-box"></div>
+    
+    <input type="text" id="message" placeholder="小心！说'作业'会触发警报！">
+    <button onclick="sendMessage()">发射消息！</button>
+    <button onclick="clearChat()" style="background-color:#FF6666;">毁灭证据</button>
+    
+    <p class="warning">⚠️ 自动存档中...关掉网页也不会丢记录！（除非你点那个红按钮）</p>
+    
     <script>
-        // 超简陋版本（数据库部分用localStorage凑合）
+        // 从本地存储加载聊天记录
+        if(localStorage.getItem('chatHistory')) {
+            document.getElementById('chat-box').innerHTML = localStorage.getItem('chatHistory');
+        }
+        
+        const badWords = ["作业", "告老师", "谈恋爱", "数学"];
+        const punishments = [
+            "播放《英语听力真题》",
+            "发送熊猫头表情包🐼",
+            "强制循环播放《少先队队歌》",
+            "开启九九乘法表洗脑模式"
+        ];
+        
         function sendMessage() {
-            let msg = document.getElementById('message').value;
-            let chatbox = document.getElementById('chatbox');
+            let msg = document.getElementById("message").value;
+            let chatBox = document.getElementById("chat-box");
+            let currentTime = new Date().toLocaleTimeString();
             
-            // 自动颜文字转换
-            if (msg.includes('草')) msg = msg.replace('草', '🌿');
+            // 违禁词检测
+            let triggered = false;
+            for(let i=0; i<badWords.length; i++) {
+                if(msg.includes(badWords[i])) {
+                    chatBox.innerHTML += `<p>🚨 系统：检测到「${badWords[i]}」！惩罚：${punishments[i]}</p>`;
+                    triggered = true;
+                    
+                    // 特殊惩罚
+                    if(badWords[i] === "数学") {
+                        chatBox.innerHTML += `<p>📢 系统：<marquee>${generateMathTable()}</marquee></p>`;
+                    }
+                }
+            }
             
-            chatbox.innerHTML += `<p>${new Date().toLocaleTimeString()} 你说: ${msg} 
-                                 ${getRandomEmoji()}</p>`;
+            if(!triggered && msg.trim() !== "") {
+                chatBox.innerHTML += `<p>👧 崔紫睿 (${currentTime})：${msg}</p>`;
+            }
             
-            // 保存到本地存储（可能会被浏览器当饼干吃掉）
-            localStorage.setItem('chat_history', chatbox.innerHTML);
-            
-            document.getElementById('message').value = '';
+            // 保存到本地存储
+            localStorage.setItem('chatHistory', chatBox.innerHTML);
+            document.getElementById("message").value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
-
-        function getRandomEmoji() {
-            const emojis = ['(◕ᴗ◕✿)', '(╯‵□′)╯︵┻━┻', 'ψ(｀∇´)ψ', '_(:3 ⌒ﾞ)_'];
-            return emojis[Math.floor(Math.random() * emojis.length)];
-        }
-
-        // 加载历史记录
-        window.onload = function() {
-            let savedChat = localStorage.getItem('chat_history');
-            if (savedChat) {
-                document.getElementById('chatbox').innerHTML = savedChat;
-            } else {
-                document.getElementById('chatbox').innerHTML = 
-                    '<p>✨系统提示：这个菜鸡开发者还没写后端！历史记录会消失哦~</p>';
+        
+        function clearChat() {
+            if(confirm("确定要毁灭所有犯罪证据吗？")) {
+                localStorage.removeItem('chatHistory');
+                document.getElementById('chat-box').innerHTML = '<p>💥 系统：崔紫睿销毁了所有聊天记录！</p>';
             }
         }
+        
+        function generateMathTable() {
+            let table = "";
+            for(let i=1; i<=3; i++) {
+                for(let j=1; j<=9; j++) {
+                    table += `${i}×${j}=${i*j} `;
+                }
+                table += " | ";
+            }
+            return table;
+        }
+        
+        // 自动欢迎消息
+        window.onload = function() {
+            if(!localStorage.getItem('firstVisit')) {
+                document.getElementById('chat-box').innerHTML += 
+                    '<p>🌟 系统：欢迎来到5.1班秘密基地！发"辣条"有惊喜！</p>';
+                localStorage.setItem('firstVisit', 'true');
+            }
+        };
     </script>
 </body>
 </html>
