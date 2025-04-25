@@ -1,88 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2D Minecraft with Inventory</title>
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, sans-serif;
-    }
-    #world {
-        position: relative;
-        display: grid;
-        grid-template-columns: repeat(20, 20px);
-    }
-    .dirt { background-color: #8B4513; }
-    .grass { background-color: #008000; }
-    .stone { background-color: #708090; }
-    .bed { background-color: #FFA07A; }
-    .torch { background-color: #FFD700; }
-    .water { background-color: #0000FF; }
-    .wood { background-color: #A0522D; }
-    .door { background-color: #8B4513; } /* Using dirt color for door */
-    .stone-stairs { background-color: #708090; } /* Using stone color for stairs */
-    .air { background-color: transparent; }
-    #player {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-color: blue;
-        z-index: 2;
-        border: 1px solid #ccc; /* 添加灰色边框 */
-    }
-    #inventory {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 10px;
-    }
-    .inventory-item {
-        width: 20px;
-        height: 20px;
-        background-color: grey;
-        margin: 5px;
-        cursor: pointer;
-        border: 1px solid #ccc; /* 添加灰色边框 */
-    }
-    .inventory-item.selected {
-        border: 2px solid white;
-    }
-</style>
+    <title>Minecraft风格建造游戏</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #block-selector {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+        }
+        .block-option {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            border: 2px solid #fff;
+            cursor: pointer;
+        }
+        #inventory {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+        }
+        #world {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+        }
+        .block {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            image-rendering: pixelated;
+        }
+        #player {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background-color: rgba(255,0,0,0.5);
+            z-index: 100;
+        }
+    </style>
 </head>
 <body>
-<div id="world"></div>
-<div id="inventory"></div>
-<div id="player"></div>
+    <div id="game-container">
+        <div id="world"></div>
+        <div id="player"></div>
+        <div id="block-selector">
+            <div class="block-option" style="background-color: #8B4513;" data-type="wood"></div>
+            <div class="block-option" style="background-color: #808080;" data-type="stone"></div>
+            <div class="block-option" style="background-color: #964B00;" data-type="dirt"></div>
+            <div class="block-option" style="background-color: #00FF00;" data-type="grass"></div>
+            <div class="block-option" style="background-color: #B22222;" data-type="brick"></div>
+        </div>
+        <div id="inventory">
+            <h3>建造模式</h3>
+            <p>WASD: 移动</p>
+            <p>鼠标左键: 放置方块</p>
+            <p>鼠标右键: 移除方块</p>
+            <p>当前选择: <span id="selected-block">grass</span></p>
+        </div>
+    </div>
 
-<script>
-    const world = document.getElementById('world');
-    const player = document.getElementById('player');
-    const inventory = document.getElementById('inventory');
-    const blockTypes = ['grass', 'dirt', 'stone', 'bed', 'torch', 'water', 'wood', 'door', 'stone-stairs'];
-    const worldSize = 20;
-    let selectedBlock = 'grass'; // 默认选中的方块
-    let playerPosition = { x: 0, y: 0 };
+    <script>
+        // 游戏状态
+        const gameState = {
+            blocks: [],
+            selectedBlockType: 'grass',
+            player: {
+                x: 500,
+                y: 300,
+                speed: 5
+            },
+            keys: {}
+        };
 
-    // 创建世界
-    function createWorld() {
-        for (let i = 0; i < worldSize * worldSize; i++) {
-            const block = document.createElement('div');
-            block.classList.add('dirt'); // 默认方块为泥土
-            block.style.border = '1px solid #ccc'; // 添加灰色边框
-            world.appendChild(block);
+        // 方块类型和颜色
+        const blockTypes = {
+            wood: '#8B4513',
+            stone: '#808080',
+            dirt: '#964B00',
+            grass: '#00FF00',
+            brick: '#B22222'
+        };
+
+        // 初始化游戏
+        function initGame() {
+            // 创建地面
+            for (let x = 0; x < window.innerWidth; x += 50) {
+                createBlock(x, window.innerHeight - 50, 'grass');
+                createBlock(x, window.innerHeight - 100, 'dirt');
+                createBlock(x, window.innerHeight - 150, 'dirt');
+            }
+
+            // 初始化玩家
+            const player = document.getElementById('player');
+            player.style.left = gameState.player.x + 'px';
+            player.style.top = gameState.player.y + 'px';
+
+            // 事件监听
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('keyup', handleKeyUp);
+            document.addEventListener('mousedown', handleMouseDown);
+            
+            // 方块选择器
+            const blockOptions = document.querySelectorAll('.block-option');
+            blockOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    gameState.selectedBlockType = option.dataset.type;
+                    document.getElementById('selected-block').textContent = option.dataset.type;
+                });
+            });
+
+            // 游戏循环
+            requestAnimationFrame(gameLoop);
         }
-    }
 
-    // 创建物品栏
-    function createInventory() {
-        blockTypes.forEach(type => {
-            const item = document.createElement('div');
-            item.classList.add('inventory-item');
-            item.style.backgroundColor = getTypeColor(type);
-            item.style.border = '
+        // 创建方块
+        function createBlock(x, y, type) {
+            const block = document.createElement('div');
+            block.className = 'block';
+            block.style.left = x + 'px';
+            block.style.top = y + 'px';
+            block.style.backgroundColor = blockTypes[type];
+            block.dataset.type = type;
+            
+            document.getElementById('world').appendChild(block);
+            gameState.blocks.push({
+                element: block,
+                x: x,
+                y: y,
+                type: type
+            });
+        }
+
+        // 移除方块
+        function removeBlock(x, y) {
+            const blockIndex = gameState.blocks.findIndex(block => 
+                Math.abs(block.x - x) < 50 && Math.abs(block.y - y) < 50
+            );
+            
+            if (blockIndex !== -1) {
+                const block = gameState.blocks[blockIndex];
+                block.element.remove();
+                gameState.blocks.splice(blockIndex, 1);
+            }
+        }
+
+        // 键盘控制
+        function handleKeyDown(e) {
+            gameState.keys[e.key.toLowerCase()] = true;
+        }
+
+        function handleKeyUp(e) {
+            gameState.keys[e.key.toLowerCase()] = false;
+        }
+
+        // 鼠标控制
+        function handleMouseDown(e) {
+            const rect = document.getElementById('world').getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            if (e.button === 0) { // 左键放置
+                createBlock(
+                    Math.floor(x / 50) * 50,
+                    Math.floor(y / 50) * 50,
+                    gameState.selectedBlockType
+                );
+            } else if (e.button === 2) { // 右键移除
+                removeBlock(
+                    Math.floor(x / 50) * 50,
+                    Math.floor(y / 50) * 50
+                );
+            }
+        }
+
+        // 游戏循环
+        function gameLoop() {
+            updatePlayer();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 更新玩家位置
+        function updatePlayer() {
+            const player = document.getElementById('player');
+            
+            if (gameState.keys['w']) {
+                gameState.player.y -= gameState.player.speed;
+            }
+            if (gameState.keys['s']) {
+                gameState.player.y += gameState.player.speed;
+            }
+            if (gameState.keys['a']) {
+                gameState.player.x -= gameState.player.speed;
+            }
+            if (gameState.keys['d']) {
+                gameState.player.x += gameState.player.speed;
+            }
+            
+            // 边界检查
+            gameState.player.x = Math.max(0, Math.min(window.innerWidth - 30, gameState.player.x));
+            gameState.player.y = Math.max(0, Math.min(window.innerHeight - 60, gameState.player.y));
+            
+            // 更新位置
+            player.style.left = gameState.player.x + 'px';
+            player.style.top = gameState.player.y + 'px';
+        }
+
+        // 阻止右键菜单
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // 启动游戏
+        window.onload = initGame;
+    </script>
+</body>
+</html>
