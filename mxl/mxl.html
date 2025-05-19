@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MXY启动器</title>
+    <style>
+        :root {
+            --primary: #70b8ff;
+            --primary-light: #e6f2ff;
+            --radius: 16px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        body {
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .app-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 24px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(112, 184, 255, 0.3);
+        }
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .btn i {
+            font-size: 18px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .feature-item {
+            background: var(--primary-light);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .version-badge {
+            background: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 14px;
+            display: inline-block;
+            margin-left: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">MXY</div>
+            <h1>Minimail Xyr Launcher</h1>
+            <p>下一代Minecraft启动体验</p>
+        </header>
+
+        <div class="card">
+            <h2>核心功能 <span class="version-badge">v3.0 内测中</span></h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">J</div>
+                    <div>FCL启动</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">B</div>
+                    <div>基岩版启动</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">N</div>
+                    <div>网易版启动</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">M</div>
+                    <div>Mod/游戏下载</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">C</div>
+                    <div>KOOK聊天室</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <button class="btn" onclick="openModal()">
+                <i>ℹ️</i> 了解更多
+            </button>
+            <button class="btn" disabled>
+                <i></i> 下载 (正在内测不提供)
+            </button>
+        </div>
+    </div>
+
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <h2>关于MXY启动器</h2>
+            <div style="margin-top: 20px;">
+                <p><strong>开发团队:</strong> XYRMNC（造梦工作室）</p>
+                <p><strong>程序开发:</strong> MC_XYR, Deepseek, GitHub Copilot</p>
+                <p><strong>UI设计:</strong> MC_XYR</p>
+                <p><strong>内容设计:</strong> MC_XYR, MC_DWY, 龍諆</p>
+                <p><strong>技术栈:</strong> C#, CSS | Visual Studio 2022</p>
+                <p><strong>系统要求:</strong> 安卓 (鸿蒙系统暂未适配)</p>
+                <p><strong>所需权限:</strong> 通知权限、文件管理权限</p>
+            </div>
+            <p style="margin-top: 20px; color: #666; font-size: 14px;">
+                * 正式版将于7月1日发布
+            </p>
+            <p style="margin-top: 20px; color: #666; font-size: 14px;">
+                 MXY启动器由XYRMNC（造梦工作室）原创开发 🚫禁止商用🚫
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
